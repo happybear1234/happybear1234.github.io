@@ -3,7 +3,47 @@
   <entry>
     <title>如何使用github创建博客</title>
     <url>/2020/03/19/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8github%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2>]]></content>
+    <content><![CDATA[<p>-利用 Github 搭建博客需要熟悉git方便管理.操作<a href="http://iissnan.com/progit/" target="_blank" rel="noopener">如果对git感兴趣请参考</a></p>
+<h1 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h1><h2 id="安装-node"><a href="#安装-node" class="headerlink" title="安装 node"></a>安装 node</h2><ul>
+<li>因为 hexo 是基于 node 框架的,先下载安装 node ,查看<code>node -v</code>版本,没有的话就根据提示操作</li>
+</ul>
+<h2 id="安装-npm"><a href="#安装-npm" class="headerlink" title="安装 npm"></a>安装 npm</h2><ul>
+<li>安装 nodejs 肯定要安装 npm ,Ubuntu下载可能会很慢,建议换成国内源,参考<a href="https://www.cnblogs.com/vipstone/p/9038023.html" target="_blank" rel="noopener">Ubuntu apt-get和pip源更换</a></li>
+</ul>
+<h2 id="初始化-blog"><a href="#初始化-blog" class="headerlink" title="初始化 blog"></a>初始化 blog</h2><ol>
+<li>安装 hexo ,在 shell 中输入:<code>npm install hexo-cli -g</code>(<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">参考Hexo文档</a>)</li>
+<li>初始化 blog 目录:<code>hexo init happybear1234.github.io</code>(这里的 happybear1234 换成你自己的英文名,我这里就是github的用户名)</li>
+<li>初始化之后,进入到 blog 目录下:<code>cd happybear1234.github.io</code>(以后对博客的所以操作都是在这)</li>
+<li>安装<code>npm install</code></li>
+<li>clean一下:<code>hexo clean</code></li>
+<li>生成静态页面:<code>hexo g</code></li>
+<li>运行起来:<code>hexo s</code></li>
+</ol>
+<ul>
+<li>打开浏览器,输入 shell 里网址 localhost:4000 就能看到了(如果提示服务端口被占用,可以换个端口,<code>hexo server -p 5000</code>)</li>
+</ul>
+<h1 id="选一个Hexo主题"><a href="#选一个Hexo主题" class="headerlink" title="选一个Hexo主题"></a>选一个Hexo主题</h1><ul>
+<li>这里提供<a href="https://www.zhihu.com/question/24422335" target="_blank" rel="noopener">知乎答主们推荐的hexo主题大全</a>,刚开始为了熟悉各种配置建议使用 NexT 主题,因为文档比较详细,界面也很简洁,如果安装 NexT 主题和配置可以参考<a href="https://theme-next.org/docs/getting-started/" target="_blank" rel="noopener">文档</a></li>
+</ul>
+<h1 id="部署到网上"><a href="#部署到网上" class="headerlink" title="部署到网上"></a>部署到网上</h1><ul>
+<li>现在的 blog 只能自己本地访问,可以使用 Github Pages 免费部署</li>
+</ul>
+<h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><ul>
+<li>创建一个 xxx.github.io 的 public 仓库,这里 xxx 写你的名字,我这里写的 happybear1234.github.io,那么之后我就可以用 happybear1234.github.io 来访问了</li>
+</ul>
+<h2 id="安装-hexo-deployer-git"><a href="#安装-hexo-deployer-git" class="headerlink" title="安装 hexo-deployer-git"></a>安装 hexo-deployer-git</h2><ul>
+<li>在 blog 目录下输入下面命令,这样本地的文章才能 push 到 Github 上面去<br>  <code>npm install hexo-deployer-git --save</code></li>
+</ul>
+<h2 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h2><ul>
+<li><p>打开 blog 目录下配置文件:<code>vi _config.yml</code>,输入你的 git 地址:</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  	    type: git</span><br><span class="line">  	    repo: https:&#x2F;&#x2F;github.com&#x2F;xxx&#x2F;xxxx.github.io.git</span><br></pre></td></tr></table></figure>
+<h2 id="推送网站到-Github-上"><a href="#推送网站到-Github-上" class="headerlink" title="推送网站到 Github 上"></a>推送网站到 Github 上</h2></li>
+<li><p>直接在 blog 目录下输入:<code>hexo d</code></p>
+</li>
+<li><p>push 上去以后你就可以输入 xxx.github.io 进行访问啦</p>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>笔记</category>
       </categories>
