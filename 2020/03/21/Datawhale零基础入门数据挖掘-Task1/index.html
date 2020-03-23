@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://s1.ax1x.com/2020/03/21/8hqPgA.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/03/21/8hquCQ.jpg">
 <meta property="article:published_time" content="2020-03-21T10:25:46.000Z">
-<meta property="article:modified_time" content="2020-03-21T15:50:10.457Z">
+<meta property="article:modified_time" content="2020-03-23T08:21:01.665Z">
 <meta property="article:author" content="happybear">
 <meta property="article:tag" content="ML">
 <meta name="twitter:card" content="summary">
@@ -217,10 +217,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-21 18:25:46 / 修改时间：23:50:10" itemprop="dateCreated datePublished" datetime="2020-03-21T18:25:46+08:00">2020-03-21</time>
+              <time title="创建时间：2020-03-21 18:25:46" itemprop="dateCreated datePublished" datetime="2020-03-21T18:25:46+08:00">2020-03-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-23 16:21:01" itemprop="dateModified" datetime="2020-03-23T16:21:01+08:00">2020-03-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -251,14 +257,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
+              <span>6.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -426,6 +432,7 @@
 <li>主要应用xgb、lgb、catboost，以及pandas、numpy、matplotlib、seabon、sklearn、keras等等数据挖掘常用库或者框架来进行数据挖掘任务。</li>
 <li>通过EDA来挖掘数据的联系和自我熟悉数据</li>
 </ol>
+<h1 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 1) 载入训练集和测试集</span><br><span class="line">Train_data &#x3D; pd.read_csv(&#39;.&#x2F;datalab&#x2F;used_car_train_20200313.csv&#39;,sep&#x3D;(&#39; &#39;))</span><br><span class="line">Test_data &#x3D; pd.read_csv(&#39;.&#x2F;datalab&#x2F;used_car_testA_20200313.csv&#39;,sep&#x3D;(&#39; &#39;))</span><br><span class="line"></span><br><span class="line">print(Train_data.shape) # 返回行,列数</span><br><span class="line">print(Test_data.shape)</span><br><span class="line">out_put &#x3D; Train_data.head(4) # 返回前四行字段数据</span><br><span class="line">print(out_put)</span><br><span class="line"></span><br><span class="line"># 2)分类指标评价计算</span><br><span class="line"></span><br><span class="line">## accuracy</span><br><span class="line">from sklearn.metrics import accuracy_score</span><br><span class="line">y_pred &#x3D; [0, 1, 0, 1] # 预测标签</span><br><span class="line">y_true &#x3D; [0, 1, 1, 1] # 正确标签</span><br><span class="line">print(&#39;ACC:&#39;,accuracy_score(y_true, y_pred)) # 返回正确样本所占比例（float）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">TP：真正例：即将正样本预测为正样本</span><br><span class="line">TN：真反例：即将负样本预测为负样本</span><br><span class="line">FP：假正例：将负样本预测为了正样本</span><br><span class="line">FN：假反例：将正样本预测为了负样本</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">## Percision,Recall,F1-score</span><br><span class="line">from sklearn import metrics</span><br><span class="line">y_pred &#x3D; [0, 1, 0, 0]</span><br><span class="line">y_true &#x3D; [0, 1, 0, 1]</span><br><span class="line">print(&#39;Precision&#39;,metrics.precision_score(y_true, y_pred)) # 返回 TP &#x2F; (TP + FP)</span><br><span class="line">print(&#39;Recall&#39;,metrics.recall_score(y_true, y_pred)) # 返回 TP &#x2F; (TP + FN)</span><br><span class="line">print(&#39;F1-score:&#39;,metrics.f1_score(y_true, y_pred)) # 返回 2*(P*R)&#x2F;(P+R)</span><br><span class="line"></span><br><span class="line">## AUC</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.metrics import roc_auc_score</span><br><span class="line">y_true &#x3D; np.array([0, 0, 1, 1]) # True labels or binary label indicators</span><br><span class="line">y_scores &#x3D; np.array([0.1, 0.4, 0.35, 0.8]) # Target scores</span><br><span class="line">print(&#39;AUC socre:&#39;,roc_auc_score(y_true, y_scores))</span><br><span class="line"></span><br><span class="line"># coding&#x3D;utf-8</span><br><span class="line"># import numpy as np</span><br><span class="line"># from sklearn import metrics</span><br><span class="line"></span><br><span class="line"># MAPE需要自己实现</span><br><span class="line">def mape(y_true, y_pred):</span><br><span class="line">    return np.mean(np.abs((y_pred - y_true) &#x2F; y_true))</span><br><span class="line"></span><br><span class="line">y_true &#x3D; np.array([1.0, 5.0, 4.0, 3.0, 2.0, 5.0, -3.0])</span><br><span class="line">y_pred &#x3D; np.array([1.0, 4.5, 3.8, 3.2, 3.0, 4.8, -2.2])</span><br><span class="line"></span><br><span class="line"># MSE</span><br><span class="line">print(&#39;MSE:&#39;,metrics.mean_squared_error(y_true, y_pred))</span><br><span class="line"># RMSE</span><br><span class="line">print(&#39;RMSE:&#39;,np.sqrt(metrics.mean_squared_error(y_true, y_pred)))</span><br><span class="line"># MAE</span><br><span class="line">print(&#39;MAE:&#39;,metrics.mean_absolute_error(y_true, y_pred))</span><br><span class="line"># MAPE</span><br><span class="line">print(&#39;MAPE:&#39;,mape(y_true, y_pred))</span><br><span class="line"></span><br><span class="line">## R2-score</span><br><span class="line">from sklearn.metrics import r2_score</span><br><span class="line">y_true &#x3D; [3, -0.5, 2, 7]</span><br><span class="line">y_pred &#x3D; [2.5, 0.0, 2, 8]</span><br><span class="line">print(&#39;R2-score:&#39;,r2_score(y_true, y_pred))</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -508,7 +515,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#赛题分析"><span class="nav-number">1.</span> <span class="nav-text">赛题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据概括"><span class="nav-number">1.1.</span> <span class="nav-text">数据概括</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评测标准"><span class="nav-number">1.2.</span> <span class="nav-text">评测标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预测建模"><span class="nav-number">1.3.</span> <span class="nav-text">预测建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类预测建模"><span class="nav-number">1.3.1.</span> <span class="nav-text">分类预测建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归预测模型"><span class="nav-number">1.3.2.</span> <span class="nav-text">回归预测模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类-vs-回归"><span class="nav-number">1.3.3.</span> <span class="nav-text">分类 vs 回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类问题和回归问题之间的转换"><span class="nav-number">1.3.4.</span> <span class="nav-text">分类问题和回归问题之间的转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于评价指标"><span class="nav-number">1.4.</span> <span class="nav-text">关于评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类算法常见的评估指标如下："><span class="nav-number">1.4.1.</span> <span class="nav-text">分类算法常见的评估指标如下：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于回归预测类常见的评估指标如下"><span class="nav-number">1.4.2.</span> <span class="nav-text">对于回归预测类常见的评估指标如下:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#平均绝对误差"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">平均绝对误差</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#均方误差"><span class="nav-number">1.4.3.</span> <span class="nav-text">均方误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R2（R-Square）"><span class="nav-number">1.4.4.</span> <span class="nav-text">R2（R-Square）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几何解释"><span class="nav-number">1.4.5.</span> <span class="nav-text">几何解释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析结果"><span class="nav-number">2.</span> <span class="nav-text">分析结果</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#赛题分析"><span class="nav-number">1.</span> <span class="nav-text">赛题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据概括"><span class="nav-number">1.1.</span> <span class="nav-text">数据概括</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评测标准"><span class="nav-number">1.2.</span> <span class="nav-text">评测标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预测建模"><span class="nav-number">1.3.</span> <span class="nav-text">预测建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类预测建模"><span class="nav-number">1.3.1.</span> <span class="nav-text">分类预测建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归预测模型"><span class="nav-number">1.3.2.</span> <span class="nav-text">回归预测模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类-vs-回归"><span class="nav-number">1.3.3.</span> <span class="nav-text">分类 vs 回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类问题和回归问题之间的转换"><span class="nav-number">1.3.4.</span> <span class="nav-text">分类问题和回归问题之间的转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于评价指标"><span class="nav-number">1.4.</span> <span class="nav-text">关于评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类算法常见的评估指标如下："><span class="nav-number">1.4.1.</span> <span class="nav-text">分类算法常见的评估指标如下：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于回归预测类常见的评估指标如下"><span class="nav-number">1.4.2.</span> <span class="nav-text">对于回归预测类常见的评估指标如下:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#平均绝对误差"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">平均绝对误差</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#均方误差"><span class="nav-number">1.4.3.</span> <span class="nav-text">均方误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R2（R-Square）"><span class="nav-number">1.4.4.</span> <span class="nav-text">R2（R-Square）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几何解释"><span class="nav-number">1.4.5.</span> <span class="nav-text">几何解释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析结果"><span class="nav-number">2.</span> <span class="nav-text">分析结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码示例"><span class="nav-number">3.</span> <span class="nav-text">代码示例</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -576,12 +583,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">6k</span>
+    <span title="站点总字数">8k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5 分钟</span>
+    <span title="站点阅读时长">7 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
