@@ -191,6 +191,269 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://happybear1234.github.io/2020/03/28/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="happybear">
+      <meta itemprop="description" content="happybear的个人博客,主要涉及到编程(C++,Python,Linux),个人提升学习">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="happybear">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/28/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task3/" class="post-title-link" itemprop="url">Datawhale零基础入门数据挖掘-Task3</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-28 17:51:42 / 修改时间：18:14:17" itemprop="dateCreated datePublished" datetime="2020-03-28T17:51:42+08:00">2020-03-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%8F%8A%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">数据挖掘及机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-users"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="firestore-visitors-count"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>特征工程：对于特征进行进一步分析，并对于数据进行处理</li>
+</ul>
+<h1 id="常见的特征工程包括"><a href="#常见的特征工程包括" class="headerlink" title="常见的特征工程包括"></a>常见的特征工程包括</h1><ol>
+<li>异常处理</li>
+</ol>
+<ul>
+<li>通过箱线图（或 3-Sigma）分析删除异常值；</li>
+<li>BOX-COX 转换（处理有偏分布）；</li>
+<li>长尾截断；</li>
+</ul>
+<ol start="2">
+<li>特征归一化/标准化：</li>
+</ol>
+<ul>
+<li>标准化（转换为标准正态分布）；</li>
+<li>归一化（抓换到 [0,1] 区间）；</li>
+<li>针对幂律分布，可以采用公式：$log(\frac{1+x}{1+median})$</li>
+</ul>
+<ol start="3">
+<li>数据分桶：</li>
+</ol>
+<ul>
+<li>等频分桶；</li>
+<li>等距分桶；</li>
+<li>Best-KS 分桶（类似利用基尼指数进行二分类）；</li>
+<li>卡方分桶；</li>
+</ul>
+<ol start="4">
+<li>缺失值处理：</li>
+</ol>
+<ul>
+<li>不处理（针对类似 XGBoost 等树模型）；</li>
+<li>删除（缺失数据太多）；</li>
+<li>插值补全，包括均值/中位数/众数/建模预测/多重插补/压缩感知补全/矩阵补全等；</li>
+<li>分箱，缺失值一个箱；</li>
+</ul>
+<ol start="5">
+<li>特征构造：</li>
+</ol>
+<ul>
+<li>构造统计量特征，报告计数、求和、比例、标准差等；</li>
+<li>时间特征，包括相对时间和绝对时间，节假日，双休日等；</li>
+<li>地理信息，包括分箱，分布编码等方法；</li>
+<li>非线性变换，包括 log/ 平方/ 根号等；</li>
+<li>特征组合，特征交叉；</li>
+<li>仁者见仁，智者见智。</li>
+</ul>
+<ol start="6">
+<li>特征筛选</li>
+</ol>
+<ul>
+<li>过滤式（filter）：先对数据进行特征选择，然后在训练学习器，常见的方法有 Relief/方差选择发/相关系数法/卡方检验法/互信息法；</li>
+<li>包裹式（wrapper）：直接把最终将要使用的学习器的性能作为特征子集的评价准则，常见方法有 LVM（Las Vegas Wrapper） ；</li>
+<li>嵌入式（embedding）：结合过滤式和包裹式，学习器训练过程中自动进行了特征选择，常见的有 lasso 回归；</li>
+</ul>
+<ol start="7">
+<li>降维</li>
+</ol>
+<ul>
+<li>PCA/ LDA/ ICA；</li>
+<li>特征选择也是一种降维。</li>
+</ul>
+<h1 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import seaborn as sns</span><br><span class="line">from operator import itemgetter</span><br><span class="line"></span><br><span class="line">Train_data &#x3D; pd.read_csv(&quot;.&#x2F;datalab&#x2F;used_car_train_20200313.csv&quot;, sep&#x3D;&quot; &quot;)</span><br><span class="line">Test_data &#x3D; pd.read_csv(&quot;.&#x2F;datalab&#x2F;used_car_testA_20200313.csv&quot;, sep&#x3D;&quot; &quot;)</span><br><span class="line"></span><br><span class="line">print(Train_data.shape)</span><br></pre></td></tr></table></figure>
+
+<pre><code>(150000, 31)</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(Train_data.head())</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>SaleID</th>
+<th>name</th>
+<th>regDate</th>
+<th>model</th>
+<th>…</th>
+<th>v_11</th>
+<th>v_12</th>
+<th>v_13</th>
+<th>v_14</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>736</td>
+<td>20040402</td>
+<td>30.0</td>
+<td>…</td>
+<td>2.804097</td>
+<td>-2.420821</td>
+<td>0.795292</td>
+<td>0.914762</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2262</td>
+<td>20030301</td>
+<td>40.0</td>
+<td>…</td>
+<td>2.096338</td>
+<td>-1.030483</td>
+<td>-1.722674</td>
+<td>0.245522</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>14874</td>
+<td>20040403</td>
+<td>115.0</td>
+<td>…</td>
+<td>1.803559</td>
+<td>1.565330</td>
+<td>-0.832687</td>
+<td>-0.229963</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>71865</td>
+<td>19960908</td>
+<td>109.0</td>
+<td>…</td>
+<td>1.285940</td>
+<td>-0.501868</td>
+<td>-2.438353</td>
+<td>-0.478699</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>111080</td>
+<td>20120103</td>
+<td>110.0</td>
+<td>…</td>
+<td>0.910783</td>
+<td>0.931110</td>
+<td>2.834518</td>
+<td>1.923482</td>
+</tr>
+</tbody></table>
+<p>[5 rows x 31 columns]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(Train_data.columns)</span><br></pre></td></tr></table></figure>
+
+<pre><code>Index([&apos;SaleID&apos;, &apos;name&apos;, &apos;regDate&apos;, &apos;model&apos;, &apos;brand&apos;, &apos;bodyType&apos;, &apos;fuelType&apos;,
+       &apos;gearbox&apos;, &apos;power&apos;, &apos;kilometer&apos;, &apos;notRepairedDamage&apos;, &apos;regionCode&apos;,
+       &apos;seller&apos;, &apos;offerType&apos;, &apos;creatDate&apos;, &apos;price&apos;, &apos;v_0&apos;, &apos;v_1&apos;, &apos;v_2&apos;, &apos;v_3&apos;,
+       &apos;v_4&apos;, &apos;v_5&apos;, &apos;v_6&apos;, &apos;v_7&apos;, &apos;v_8&apos;, &apos;v_9&apos;, &apos;v_10&apos;, &apos;v_11&apos;, &apos;v_12&apos;,
+       &apos;v_13&apos;, &apos;v_14&apos;],
+      dtype=&apos;object&apos;)</code></pre><h1 id="删除异常值"><a href="#删除异常值" class="headerlink" title="删除异常值"></a>删除异常值</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">## 删除异常值</span><br><span class="line"># 这里我包装了一个异常值处理的代码，可以随便调用</span><br><span class="line">def outliers_proc(data, col_name, scale&#x3D;3):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    用于清洗异常值，默认用box_plot(scale&#x3D;3)进行清洗</span><br><span class="line">    :param data:接受 pandas 数据格式</span><br><span class="line">    :param col_name:pandas 列名</span><br><span class="line">    :param scale:尺度</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def box_plot_outliers(data_ser, box_scale):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        利用箱线图去除异常值</span><br><span class="line">        :param data_ser:接收 pandas.Series 数据格式</span><br><span class="line">        :param box_scale: 箱线图尺度 （规定大于上四分位数1.5倍四分位数差 的值，或者小于下四分位数1.5倍四分位数差的值，划为异常值）</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        iqr &#x3D; box_scale * (data_ser.quantile(0.75) - data_ser.quantile(0.25)) # 3倍四分位数差</span><br><span class="line">        val_low &#x3D; data_ser.quantile(0.25) - iqr # 下限&#x3D;Q1-3IQR</span><br><span class="line">        val_up &#x3D; data_ser.quantile(0.75) + iqr # 上限&#x3D;Q3+3IQR</span><br><span class="line">        rule_low &#x3D; (data_ser &lt; val_low)</span><br><span class="line">        rule_up &#x3D; (data_ser &gt; val_up) # 返回 pandas.Series 中对应值的bool</span><br><span class="line">        return (rule_low, rule_up), (val_low, val_up)</span><br><span class="line"></span><br><span class="line">    data_n &#x3D; data.copy() # copy 数据</span><br><span class="line">    data_series &#x3D; data_n[col_name] # 返回指定 col_name 数据</span><br><span class="line">    rule, value &#x3D; box_plot_outliers(data_series, box_scale&#x3D;scale)</span><br><span class="line">    index &#x3D; np.arange(data_series.shape[0])[rule[0]|rule[1]] # 返回rule_low, rule_up中为True的下标的列表</span><br><span class="line">    print(&quot;Delete number is:&#123;&#125;&quot;.format(len(index))) # 打印下标列表中个数</span><br><span class="line">    data_n &#x3D; data_n.drop(index) # 删除(删除后下标没变)</span><br><span class="line">    data_n.reset_index(drop&#x3D;True, inplace&#x3D;True) # 重置索引（drop&#x3D;True删除原来的索引;inplace&#x3D;True当前修改状态应用到原来Series中）</span><br><span class="line">    print(&quot;Now column number is:&#123;&#125;&quot;.format(data_n.shape[0])) # 查看删除后的数据个数</span><br><span class="line">    index_low &#x3D; np.arange(data_series.shape[0])[rule[0]]</span><br><span class="line">    outliers &#x3D; data_series.iloc[index_low] # ilco-按下标进行索引</span><br><span class="line">    print(&quot;Description of data larger than the lower bound is:&quot;)</span><br><span class="line">    print(pd.Series(outliers).describe())</span><br><span class="line">    index_up &#x3D; np.arange(data_series.shape[0])[rule[1]]</span><br><span class="line">    outliers &#x3D; data_series.iloc[index_up]</span><br><span class="line">    print(&quot;Description of data larger than the upper bound is:&quot;)</span><br><span class="line">    print(pd.Series(outliers).describe())</span><br><span class="line"></span><br><span class="line">    fig, ax &#x3D; plt.subplots(1, 2, figsize&#x3D;(10, 7)) # 创建子图:1行2列</span><br><span class="line">    sns.boxplot(y&#x3D;data[col_name], data&#x3D;data, palette&#x3D;&quot;Set1&quot;, ax&#x3D;ax[0]) # 箱线图</span><br><span class="line">    sns.boxplot(y&#x3D;data_n[col_name], data&#x3D;data_n, palette&#x3D;&quot;Set1&quot;, ax&#x3D;ax[1])</span><br><span class="line">    plt.show()</span><br><span class="line">    return data_n</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 我们可以删掉一些异常数据,以 power 为例</span><br><span class="line">## 这里删不删可以自行判断</span><br><span class="line">## 但是注意 Test 的数据不能删</span><br><span class="line">Train_data &#x3D; outliers_proc(Train_data, &quot;power&quot;, scale&#x3D;3)</span><br></pre></td></tr></table></figure>
+
+<pre><code>Delete number is:963
+Now column number is:149037
+Description of data larger than the lower bound is:
+count    0.0
+mean     NaN
+std      NaN
+min      NaN
+25%      NaN
+50%      NaN
+75%      NaN
+max      NaN
+Name: power, dtype: float64
+Description of data larger than the upper bound is:
+count      963.000000
+mean       846.836968
+std       1929.418081
+min        376.000000
+25%        400.000000
+50%        436.000000
+75%        514.000000
+max      19312.000000
+Name: power, dtype: float64</code></pre><p><img src="https://s1.ax1x.com/2020/03/28/GAATiR.png" alt="1"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://happybear1234.github.io/2020/03/24/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1651,7 +1914,7 @@ Name: price, Length: 150000, dtype: int64</code></pre><figure class="highlight p
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1705,12 +1968,12 @@ Name: price, Length: 150000, dtype: int64</code></pre><figure class="highlight p
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">40k</span>
+    <span title="站点总字数">45k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">37 分钟</span>
+    <span title="站点阅读时长">41 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
