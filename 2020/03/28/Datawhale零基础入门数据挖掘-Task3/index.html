@@ -28,8 +28,14 @@
 <meta property="og:description" content="特征工程：对于特征进行进一步分析，并对于数据进行处理  常见的特征工程包括 异常处理   通过箱线图（或 3-Sigma）分析删除异常值； BOX-COX 转换（处理有偏分布）； 长尾截断；   特征归一化&#x2F;标准化：   标准化（转换为标准正态分布）； 归一化（抓换到 [0,1] 区间）； 针对幂律分布，可以采用公式：$log(\frac{1+x}{1+median})$   数据分桶：   等">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s1.ax1x.com/2020/03/28/GAATiR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/30/Guw0jH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/30/Guw6Et.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/30/GuwcUP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/30/GuwRC8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/30/Guwfgg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/30/GuwIDs.png">
 <meta property="article:published_time" content="2020-03-28T09:51:42.000Z">
-<meta property="article:modified_time" content="2020-03-28T10:14:17.415Z">
+<meta property="article:modified_time" content="2020-03-30T14:35:43.665Z">
 <meta property="article:author" content="happybear">
 <meta property="article:tag" content="ML">
 <meta name="twitter:card" content="summary">
@@ -215,10 +221,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-28 17:51:42 / 修改时间：18:14:17" itemprop="dateCreated datePublished" datetime="2020-03-28T17:51:42+08:00">2020-03-28</time>
+              <time title="创建时间：2020-03-28 17:51:42" itemprop="dateCreated datePublished" datetime="2020-03-28T17:51:42+08:00">2020-03-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-30 22:35:43" itemprop="dateModified" datetime="2020-03-30T22:35:43+08:00">2020-03-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -249,14 +261,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.5k</span>
+              <span>15k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -443,6 +455,80 @@ min        376.000000
 75%        514.000000
 max      19312.000000
 Name: power, dtype: float64</code></pre><p><img src="https://s1.ax1x.com/2020/03/28/GAATiR.png" alt="1"></p>
+<h1 id="特征构造"><a href="#特征构造" class="headerlink" title="特征构造"></a>特征构造</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 训练集和测试集放在一起，方便构造特征</span><br><span class="line">Train_data[&quot;train&quot;] &#x3D; 1 # 添加新字段，并设置值为1</span><br><span class="line">Test_data[&quot;train&quot;] &#x3D; 1</span><br><span class="line">data &#x3D; pd.concat([Train_data,Test_data],ignore_index&#x3D;True) # 连接函数 ignore_index&#x3D;True重置索引</span><br><span class="line"></span><br><span class="line"># 使用时间：data[&quot;createDate&quot;] - data[&quot;regDate&quot;], 反应汽车使用时间，一般来说价格与使用时间成反比</span><br><span class="line"># 不过要注意, 数据里有时间出错的格式, 所以我们需要 errors &#x3D; &quot;coerce&quot;</span><br><span class="line">data[&quot;used_time&quot;] &#x3D; (pd.to_datetime(data[&quot;creatDate&quot;], format&#x3D;&quot;%Y%m%d&quot;, errors&#x3D;&quot;coerce&quot;) -</span><br><span class="line">pd.to_datetime(data[&quot;regDate&quot;],format&#x3D;&quot;%Y%m%d&quot;,errors&#x3D;&quot;coerce&quot;)).dt.days # to_datetime将参数转换为日期 dt.days每个元素的天数</span><br><span class="line"></span><br><span class="line"># 看一下空数据, 有 15k 个样本的时间有问题的, 我们可以选择删除, 也可以选择放着</span><br><span class="line"># 但是这里不建议删除, 因为删除缺失数据占总样本量过大, 7.5%</span><br><span class="line"># 我们可以先放着, 因为如果我们 XGBoost 之类的决策树, 其本身就能处理缺失值, 所以可以不用管</span><br><span class="line">print(data[&quot;used_time&quot;].isnull().sum())</span><br></pre></td></tr></table></figure>
+
+<pre><code>15072</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 从邮编中提取城市信息, 相当于加入了先验知识</span><br><span class="line">#print(data[&quot;regionCode&quot;])</span><br><span class="line"># 增加city 字段, 并从 regionCode 值的倒数第三位切片(apply 对regionCode每个元素运行指定运算 lambda 匿名函数)</span><br><span class="line">data[&quot;city&quot;] &#x3D; data[&quot;regionCode&quot;].apply(lambda x : str(x)[:-3])</span><br><span class="line"></span><br><span class="line"># 计算某品牌的销售统计量, 还可以计算其他特征的统计量</span><br><span class="line"># 这里以 train 的数据计算统计量</span><br><span class="line">Train_gb &#x3D; Train_data.groupby(&quot;brand&quot;) # 分组</span><br><span class="line">all_info &#x3D; &#123;&#125;</span><br><span class="line">for kind, kind_data in Train_gb:</span><br><span class="line">    info &#x3D; &#123;&#125;</span><br><span class="line">    kind_data &#x3D; kind_data[kind_data[&quot;price&quot;] &gt; 0]</span><br><span class="line">    info[&quot;brand_amount&quot;] &#x3D; len(kind_data)</span><br><span class="line">    info[&quot;brand_price_max&quot;] &#x3D; kind_data.price.max()</span><br><span class="line">    info[&quot;brand_price_median&quot;] &#x3D; kind_data.price.median()</span><br><span class="line">    info[&quot;brand_price_min&quot;] &#x3D; kind_data.price.min()</span><br><span class="line">    info[&quot;brand_price_sum&quot;] &#x3D; kind_data.price.sum()</span><br><span class="line">    info[&quot;brand_price_std&quot;] &#x3D; kind_data.price.std() # 样本方差</span><br><span class="line">    info[&quot;brand_price_average&quot;] &#x3D; round(kind_data.price.sum() &#x2F; (len(kind_data)+1), 2) # round(2)取近似值保留两位数</span><br><span class="line">    all_info[kind] &#x3D; info</span><br><span class="line"></span><br><span class="line">brand_fe &#x3D; pd.DataFrame(all_info).T.reset_index().rename(columns&#x3D;&#123;&quot;index&quot;:&quot;brand&quot;&#125;) # T转置   reset_index还原索引  rename并修改列名</span><br><span class="line">data &#x3D; data.merge(brand_fe, how&#x3D;&quot;left&quot;, on&#x3D;&quot;brand&quot;) # 合并数据 data链接在brand_fe &quot;brand&quot;字段左边</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据分桶"><a href="#数据分桶" class="headerlink" title="数据分桶"></a>数据分桶</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 数据分桶 以 power 为例</span><br><span class="line"># 这时候缺失值也进桶了</span><br><span class="line"># 为什么要分桶：</span><br><span class="line"># 1. 离散后稀疏向量内积乘法运算速度更快, 计算结果也方便存储, 容易扩展</span><br><span class="line"># 2. 离散后的特征对异常值更具鲁棒性, 如 age&gt;30 为 1 否则为 0 , 对于年龄为 200 的也不会对模型造成很大的干扰</span><br><span class="line"># 3. LR 属于广义线性模型, 表达能力有限, 经过离散化后, 每个变量有单独的权重, 这相当于引入了非线性, 能够提升模型的表达能力, 加大拟合</span><br><span class="line"># 4. 离散后特征可以进行特征交叉, 提升表达能力, 由 M+N 个变量变成　Ｍ*N 个变量, 进一步引入非线性, 提升了表达能力</span><br><span class="line"># 5. 特征离散后模型更稳定, 如用户年龄区间, 不会因为用户年龄长了一岁就变化</span><br><span class="line"># 当然还有很多原因,　LightGBM 在改进 XGBoost 时就增加了数据分桶, 增强了模型的泛化性</span><br><span class="line"></span><br><span class="line">bin &#x3D; [i*10 for i in range(31)]</span><br><span class="line">data[&quot;power_bin&quot;] &#x3D; pd.cut(data[&quot;power&quot;], bin, labels&#x3D;False) # 分桶 cut切分数据(必须是一维的) bin定义区间 labels&#x3D;False返回第几个bin（从0开始）</span><br><span class="line">print(data[[&quot;power_bin&quot;, &quot;power&quot;]].head())</span><br></pre></td></tr></table></figure>
+
+<pre><code> power_bin  power
+0        5.0     60
+1        NaN      0
+2       16.0    163
+3       19.0    193
+4        6.0     68</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 删除不需要的数据</span><br><span class="line">data &#x3D; data.drop([&quot;creatDate&quot;, &quot;regDate&quot;, &quot;regionCode&quot;], axis&#x3D;1) # drop函数默认删除行，列需要加axis &#x3D; 1</span><br><span class="line">print(data.shape)</span><br></pre></td></tr></table></figure>
+
+<pre><code>(199037, 39)</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(data.columns)</span><br></pre></td></tr></table></figure>
+
+<pre><code>Index([&apos;SaleID&apos;, &apos;name&apos;, &apos;model&apos;, &apos;brand&apos;, &apos;bodyType&apos;, &apos;fuelType&apos;, &apos;gearbox&apos;,
+       &apos;power&apos;, &apos;kilometer&apos;, &apos;notRepairedDamage&apos;, &apos;seller&apos;, &apos;offerType&apos;,
+       &apos;price&apos;, &apos;v_0&apos;, &apos;v_1&apos;, &apos;v_2&apos;, &apos;v_3&apos;, &apos;v_4&apos;, &apos;v_5&apos;, &apos;v_6&apos;, &apos;v_7&apos;, &apos;v_8&apos;,
+       &apos;v_9&apos;, &apos;v_10&apos;, &apos;v_11&apos;, &apos;v_12&apos;, &apos;v_13&apos;, &apos;v_14&apos;, &apos;train&apos;, &apos;used_time&apos;,
+       &apos;city&apos;, &apos;brand_amount&apos;, &apos;brand_price_max&apos;, &apos;brand_price_median&apos;,
+       &apos;brand_price_min&apos;, &apos;brand_price_sum&apos;, &apos;brand_price_std&apos;,
+       &apos;brand_price_average&apos;, &apos;power_bin&apos;],
+      dtype=&apos;object&apos;)</code></pre><h2 id="导出数据"><a href="#导出数据" class="headerlink" title="导出数据"></a>导出数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 目前的数据其实已经可以给树模型使用了, 所以我们导出一下</span><br><span class="line">data.to_csv(&quot;data_for_tree.csv&quot;, index&#x3D;0) # index&#x3D;0不保存行索引</span><br></pre></td></tr></table></figure>
+<h2 id="特征构造-1"><a href="#特征构造-1" class="headerlink" title="特征构造"></a>特征构造</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 我们可以再构造一份特征给 LR NN 之类的模型用</span><br><span class="line"># 之所以分开构造是因为, 不同模型对数据的要求不同</span><br><span class="line"># 先看下数据分布：</span><br><span class="line">data[&quot;power&quot;].plot.hist()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/03/30/Guw0jH.png" alt="2"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 我们刚刚已经对 train 进行异常值处理了，但是现在还有这么奇怪的分布是因为 test 中的 power 异常值，</span><br><span class="line"># 所以我们其实刚刚 train 中的 power 异常值不删为好，可以用长尾分布截断来代替</span><br><span class="line">Train_data[&quot;power&quot;].plot.hist()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/03/30/Guw6Et.png" alt="3"></p>
+<h2 id="归一化"><a href="#归一化" class="headerlink" title="归一化"></a>归一化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 我们对其取 log, 再做归一化</span><br><span class="line">from sklearn import preprocessing</span><br><span class="line"># 将数据的每一个特征缩放到给定的范围，将数据的每一个属性值减去其最小值，然后除以其极差（最大值 - 最小值）</span><br><span class="line">min_max_scaler &#x3D; preprocessing.MinMaxScaler()</span><br><span class="line">data[&quot;power&quot;] &#x3D; np.log(data[&quot;power&quot;] + 1)</span><br><span class="line"># 归一化：(0,1)标准化</span><br><span class="line">data[&quot;power&quot;] &#x3D; ((data[&quot;power&quot;] - np.min(data[&quot;power&quot;])) &#x2F; (np.max(data[&quot;power&quot;]) - np.min(data[&quot;power&quot;])))</span><br><span class="line">data[&quot;power&quot;].plot.hist()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/03/30/GuwcUP.png" alt="4"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># km 的比较正常, 应该已经做过分桶了</span><br><span class="line">data[&quot;kilometer&quot;].plot.hist()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/03/30/GuwRC8.png" alt="5"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 所以可以直接作归一化</span><br><span class="line">data[&quot;kilometer&quot;] &#x3D; ((data[&quot;kilometer&quot;] - np.min(data[&quot;kilometer&quot;])) &#x2F;</span><br><span class="line">                     (np.max(data[&quot;kilometer&quot;]) - np.min(data[&quot;kilometer&quot;])))</span><br><span class="line">data[&quot;kilometer&quot;].plot.hist()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/03/30/Guwfgg.png" alt="6"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># 除此之外 还有我们刚刚构造的统计量特征：</span><br><span class="line"># &#39;brand_amount&#39;, &#39;brand_price_average&#39;, &#39;brand_price_max&#39;,</span><br><span class="line"># &#39;brand_price_median&#39;, &#39;brand_price_min&#39;, &#39;brand_price_std&#39;,</span><br><span class="line"># &#39;brand_price_sum&#39;</span><br><span class="line"># 这里不再一一举例分析了，直接做变换，</span><br><span class="line">def max_min(x):</span><br><span class="line">    return (x - np.min(x)) &#x2F; (np.max(x) - np.min(x))</span><br><span class="line"></span><br><span class="line">data[&#39;brand_amount&#39;] &#x3D; ((data[&#39;brand_amount&#39;] - np.min(data[&#39;brand_amount&#39;])) &#x2F;</span><br><span class="line">                        (np.max(data[&#39;brand_amount&#39;]) - np.min(data[&#39;brand_amount&#39;])))</span><br><span class="line">data[&#39;brand_price_average&#39;] &#x3D; ((data[&#39;brand_price_average&#39;] - np.min(data[&#39;brand_price_average&#39;])) &#x2F;</span><br><span class="line">                               (np.max(data[&#39;brand_price_average&#39;]) - np.min(data[&#39;brand_price_average&#39;])))</span><br><span class="line">data[&#39;brand_price_max&#39;] &#x3D; ((data[&#39;brand_price_max&#39;] - np.min(data[&#39;brand_price_max&#39;])) &#x2F;</span><br><span class="line">                           (np.max(data[&#39;brand_price_max&#39;]) - np.min(data[&#39;brand_price_max&#39;])))</span><br><span class="line">data[&#39;brand_price_median&#39;] &#x3D; ((data[&#39;brand_price_median&#39;] - np.min(data[&#39;brand_price_median&#39;])) &#x2F;</span><br><span class="line">                              (np.max(data[&#39;brand_price_median&#39;]) - np.min(data[&#39;brand_price_median&#39;])))</span><br><span class="line">data[&#39;brand_price_min&#39;] &#x3D; ((data[&#39;brand_price_min&#39;] - np.min(data[&#39;brand_price_min&#39;])) &#x2F;</span><br><span class="line">                           (np.max(data[&#39;brand_price_min&#39;]) - np.min(data[&#39;brand_price_min&#39;])))</span><br><span class="line">data[&#39;brand_price_std&#39;] &#x3D; ((data[&#39;brand_price_std&#39;] - np.min(data[&#39;brand_price_std&#39;])) &#x2F;</span><br><span class="line">                           (np.max(data[&#39;brand_price_std&#39;]) - np.min(data[&#39;brand_price_std&#39;])))</span><br><span class="line">data[&#39;brand_price_sum&#39;] &#x3D; ((data[&#39;brand_price_sum&#39;] - np.min(data[&#39;brand_price_sum&#39;])) &#x2F;</span><br><span class="line">                           (np.max(data[&#39;brand_price_sum&#39;]) - np.min(data[&#39;brand_price_sum&#39;])))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 对类别特征进行 OneEncoder</span><br><span class="line"></span><br><span class="line">data &#x3D; pd.get_dummies(data, columns&#x3D;[&#39;model&#39;, &#39;brand&#39;, &#39;bodyType&#39;, &#39;fuelType&#39;,</span><br><span class="line">                                     &#39;gearbox&#39;, &#39;notRepairedDamage&#39;, &#39;power_bin&#39;]) # 装换虚伪变量</span><br><span class="line"></span><br><span class="line">print(data.shape)</span><br></pre></td></tr></table></figure>
+
+<pre><code>(199037, 370)</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(data.columns)</span><br></pre></td></tr></table></figure>
+
+<pre><code>Index([&apos;SaleID&apos;, &apos;name&apos;, &apos;power&apos;, &apos;kilometer&apos;, &apos;seller&apos;, &apos;offerType&apos;, &apos;price&apos;,
+       &apos;v_0&apos;, &apos;v_1&apos;, &apos;v_2&apos;,
+       ...
+       &apos;power_bin_20.0&apos;, &apos;power_bin_21.0&apos;, &apos;power_bin_22.0&apos;, &apos;power_bin_23.0&apos;,
+       &apos;power_bin_24.0&apos;, &apos;power_bin_25.0&apos;, &apos;power_bin_26.0&apos;, &apos;power_bin_27.0&apos;,
+       &apos;power_bin_28.0&apos;, &apos;power_bin_29.0&apos;],
+      dtype=&apos;object&apos;, length=370)</code></pre><h2 id="导出数据-1"><a href="#导出数据-1" class="headerlink" title="导出数据"></a>导出数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 这份数据可以给 LR 用</span><br><span class="line">data.to_csv(&quot;data_for_lr.csv&quot;, index&#x3D;0)</span><br></pre></td></tr></table></figure>
+
+<h1 id="特征筛选"><a href="#特征筛选" class="headerlink" title="特征筛选"></a>特征筛选</h1><h2 id="过滤式"><a href="#过滤式" class="headerlink" title="过滤式"></a>过滤式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1）过滤式</span><br><span class="line"># 相关性分析</span><br><span class="line">print(data[&#39;power&#39;].corr(data[&#39;price&#39;], method&#x3D;&#39;spearman&#39;)) #spearman：非线性的，非正太分析的数据的相关系数</span><br><span class="line">print(data[&#39;kilometer&#39;].corr(data[&#39;price&#39;], method&#x3D;&#39;spearman&#39;))</span><br><span class="line">print(data[&#39;brand_amount&#39;].corr(data[&#39;price&#39;], method&#x3D;&#39;spearman&#39;))</span><br><span class="line">print(data[&#39;brand_price_average&#39;].corr(data[&#39;price&#39;], method&#x3D;&#39;spearman&#39;))</span><br><span class="line">print(data[&#39;brand_price_max&#39;].corr(data[&#39;price&#39;], method&#x3D;&#39;spearman&#39;))</span><br><span class="line">print(data[&#39;brand_price_median&#39;].corr(data[&#39;price&#39;], method&#x3D;&#39;spearman&#39;))</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.5728285196051496
+-0.4082569701616764
+0.058156610025581514
+0.3834909576057687
+0.259066833880992
+0.38691042393409447</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 当然也可以直接看图</span><br><span class="line">data_numeric &#x3D; data[[&#39;power&#39;, &#39;kilometer&#39;, &#39;brand_amount&#39;, &#39;brand_price_average&#39;,</span><br><span class="line">                     &#39;brand_price_max&#39;, &#39;brand_price_median&#39;]]</span><br><span class="line">correlation &#x3D; data_numeric.corr() #返回data_numeric 相关性矩阵</span><br><span class="line"></span><br><span class="line">f, ax &#x3D; plt.subplots(figsize&#x3D;(7,7))</span><br><span class="line">plt.title(&quot;Correlation of Numeric Features with Price&quot;, y&#x3D;1, size&#x3D;16)</span><br><span class="line">square&#x3D;True # 将坐标轴方向设置为“equal”，以使每个单元格为方形 , vmax:色彩映射的值</span><br><span class="line">sns.heatmap(correlation, square&#x3D;True, vmax&#x3D;0.8)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/03/30/GuwIDs.png" alt="7"></p>
+<h2 id="包裹式"><a href="#包裹式" class="headerlink" title="包裹式"></a>包裹式</h2><ul>
+<li>下面的代码运行错误，看不懂<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># # 2)包裹式</span><br><span class="line">from mlxtend.feature_selection import SequentialFeatureSelector as SFS #序列特征算法的实现——贪婪搜索算法</span><br><span class="line">from sklearn.linear_model import  LinearRegression # 基于最小二乘法的线性回归</span><br><span class="line">sfs &#x3D; SFS(LinearRegression(), # 分类器或回归矩阵</span><br><span class="line">          k_features&#x3D;10, # 要选择的特征数量</span><br><span class="line">          forward&#x3D;True, #  如果为True，则向前选择，否则为反向选择</span><br><span class="line">          floating&#x3D;False, # 如果为True，则添加条件排除&#x2F;包含。</span><br><span class="line">          scoring&#x3D;&quot;r2&quot;, # 对于sklearn回归变量使用“ r2”</span><br><span class="line">          cv&#x3D;0) # 如果cv为None、False或0，则不进行交叉验证</span><br><span class="line">x &#x3D; data.drop([&quot;price&quot;], axis&#x3D;1)</span><br><span class="line">x &#x3D; x.fillna(0)</span><br><span class="line">y &#x3D; data[&quot;price&quot;]</span><br><span class="line"></span><br><span class="line">sfs.fit(x, y) # 执行特征选择并从训练数据中学习模型 x训练样本 y目标值</span><br><span class="line">sfs.k_feature_names_</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 画出来，可以看到边际效益</span><br><span class="line">from mlxtend.plotting import plot_sequential_feature_selection as plot_sfs</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">fig1 &#x3D; plot_sfs(sfs.get_metric_dict(), kind&#x3D;&#39;std_dev&#39;)</span><br><span class="line">plt.grid()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="嵌入式"><a href="#嵌入式" class="headerlink" title="嵌入式"></a>嵌入式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 下一章介绍，Lasso 回归和决策树可以完成嵌入式特征选择</span><br><span class="line"># 大部分情况下都是用嵌入式做特征筛选</span><br></pre></td></tr></table></figure>
+
+<h1 id="经验总结"><a href="#经验总结" class="headerlink" title="经验总结"></a>经验总结</h1><p>特征工程是比赛中最至关重要的的一块，特别的传统的比赛，大家的模型可能都差不多，调参带来的效果增幅是非常有限的，但特征工程的好坏往往会决定了最终的排名和成绩。</p>
+<p>特征工程的主要目的还是在于将数据转换为能更好地表示潜在问题的特征，从而提高机器学习的性能。比如，异常值处理是为了去除噪声，填补缺失值可以加入先验知识等。</p>
+<p>特征构造也属于特征工程的一部分，其目的是为了增强数据的表达。</p>
+<p>有些比赛的特征是匿名特征，这导致我们并不清楚特征相互直接的关联性，这时我们就只有单纯基于特征进行处理，比如装箱，groupby，agg 等这样一些操作进行一些特征统计，此外还可以对特征进行进一步的 log，exp 等变换，或者对多个特征进行四则运算（如上面我们算出的使用时长），多项式组合等然后进行筛选。由于特性的匿名性其实限制了很多对于特征的处理，当然有些时候用 NN 去提取一些特征也会达到意想不到的良好效果。</p>
+<p>对于知道特征含义（非匿名）的特征工程，特别是在工业类型比赛中，会基于信号处理，频域提取，峰度，偏度等构建更为有实际意义的特征，这就是结合背景的特征构建，在推荐系统中也是这样的，各种类型点击率统计，各时段统计，加用户属性的统计等等，这样一种特征构建往往要深入分析背后的业务逻辑或者说物理原理，从而才能更好的找到 magic。</p>
+<p>当然特征工程其实是和模型结合在一起的，这就是为什么要为 LR NN 做分桶和特征归一化的原因，而对于特征的处理效果和特征重要性等往往要通过模型来验证。</p>
+<p>总的来说，特征工程是一个入门简单，但想精通非常难的一件事。</p>
 
     </div>
 
@@ -525,7 +611,7 @@ Name: power, dtype: float64</code></pre><p><img src="https://s1.ax1x.com/2020/03
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的特征工程包括"><span class="nav-number">1.</span> <span class="nav-text">常见的特征工程包括</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导入数据"><span class="nav-number">2.</span> <span class="nav-text">导入数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除异常值"><span class="nav-number">3.</span> <span class="nav-text">删除异常值</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的特征工程包括"><span class="nav-number">1.</span> <span class="nav-text">常见的特征工程包括</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导入数据"><span class="nav-number">2.</span> <span class="nav-text">导入数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除异常值"><span class="nav-number">3.</span> <span class="nav-text">删除异常值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征构造"><span class="nav-number">4.</span> <span class="nav-text">特征构造</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分桶"><span class="nav-number">4.1.</span> <span class="nav-text">数据分桶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出数据"><span class="nav-number">4.2.</span> <span class="nav-text">导出数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征构造-1"><span class="nav-number">4.3.</span> <span class="nav-text">特征构造</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归一化"><span class="nav-number">4.4.</span> <span class="nav-text">归一化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出数据-1"><span class="nav-number">4.5.</span> <span class="nav-text">导出数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征筛选"><span class="nav-number">5.</span> <span class="nav-text">特征筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤式"><span class="nav-number">5.1.</span> <span class="nav-text">过滤式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包裹式"><span class="nav-number">5.2.</span> <span class="nav-text">包裹式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式"><span class="nav-number">5.3.</span> <span class="nav-text">嵌入式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经验总结"><span class="nav-number">6.</span> <span class="nav-text">经验总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -593,12 +679,12 @@ Name: power, dtype: float64</code></pre><p><img src="https://s1.ax1x.com/2020/03
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">45k</span>
+    <span title="站点总字数">55k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">41 分钟</span>
+    <span title="站点阅读时长">50 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
