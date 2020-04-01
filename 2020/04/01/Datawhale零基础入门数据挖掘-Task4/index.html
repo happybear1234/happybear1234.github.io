@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"happybear1234.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="了解常用的机器学习模型，并掌握机器学习模型的建模与调参流程  相关原理线性回归模型https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;49480391 决策树模型https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;65304798 GBDT模型https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;45145899 XGBoost模型https:&#x2F;&#x2F;zhuanlan.zhihu.c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Datawhale零基础入门数据挖掘-Task4">
+<meta property="og:url" content="https://happybear1234.github.io/2020/04/01/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task4/index.html">
+<meta property="og:site_name" content="happybear">
+<meta property="og:description" content="了解常用的机器学习模型，并掌握机器学习模型的建模与调参流程  相关原理线性回归模型https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;49480391 决策树模型https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;65304798 GBDT模型https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;45145899 XGBoost模型https:&#x2F;&#x2F;zhuanlan.zhihu.c">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/04/01/G8VrRI.png">
+<meta property="article:published_time" content="2020-04-01T10:36:04.000Z">
+<meta property="article:modified_time" content="2020-04-01T12:41:06.779Z">
+<meta property="article:author" content="happybear">
+<meta property="article:tag" content="ML">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/04/01/G8VrRI.png">
+
+<link rel="canonical" href="https://happybear1234.github.io/2020/04/01/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Datawhale零基础入门数据挖掘-Task4 | happybear</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">happybear</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-主页"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-标签"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-分类"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-档案"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://happybear1234.github.io/2020/04/01/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="happybear">
+      <meta itemprop="description" content="happybear的个人博客,主要涉及到编程(C++,Python,Linux),个人提升学习">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="happybear">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Datawhale零基础入门数据挖掘-Task4
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-04-01 18:36:04 / 修改时间：20:41:06" itemprop="dateCreated datePublished" datetime="2020-04-01T18:36:04+08:00">2020-04-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%8F%8A%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">数据挖掘及机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-users"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="firestore-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>了解常用的机器学习模型，并掌握机器学习模型的建模与调参流程</li>
+</ul>
+<h1 id="相关原理"><a href="#相关原理" class="headerlink" title="相关原理"></a>相关原理</h1><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><p><a href="https://zhuanlan.zhihu.com/p/49480391" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/49480391</a></p>
+<h2 id="决策树模型"><a href="#决策树模型" class="headerlink" title="决策树模型"></a>决策树模型</h2><p><a href="https://zhuanlan.zhihu.com/p/65304798" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/65304798</a></p>
+<h2 id="GBDT模型"><a href="#GBDT模型" class="headerlink" title="GBDT模型"></a>GBDT模型</h2><p><a href="https://zhuanlan.zhihu.com/p/45145899" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/45145899</a></p>
+<h2 id="XGBoost模型"><a href="#XGBoost模型" class="headerlink" title="XGBoost模型"></a>XGBoost模型</h2><p><a href="https://zhuanlan.zhihu.com/p/86816771" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/86816771</a></p>
+<h2 id="LightGBM模型"><a href="#LightGBM模型" class="headerlink" title="LightGBM模型"></a>LightGBM模型</h2><p><a href="https://zhuanlan.zhihu.com/p/89360721" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/89360721</a></p>
+<h2 id="教材推荐"><a href="#教材推荐" class="headerlink" title="教材推荐"></a>教材推荐</h2><ul>
+<li>《机器学习》 <a href="https://book.douban.com/subject/26708119/" target="_blank" rel="noopener">https://book.douban.com/subject/26708119/</a></li>
+<li>《统计学习方法》 <a href="https://book.douban.com/subject/10590856/" target="_blank" rel="noopener">https://book.douban.com/subject/10590856/</a></li>
+<li>《Python大战机器学习》 <a href="https://book.douban.com/subject/26987890/" target="_blank" rel="noopener">https://book.douban.com/subject/26987890/</a></li>
+<li>《面向机器学习的特征工程》 <a href="https://book.douban.com/subject/26826639/" target="_blank" rel="noopener">https://book.douban.com/subject/26826639/</a></li>
+<li>《数据科学家访谈录》 <a href="https://book.douban.com/subject/30129410/" target="_blank" rel="noopener">https://book.douban.com/subject/30129410/</a></li>
+</ul>
+<h1 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"># reduce_mem_usage 函数通过调整数据类型，帮助我们减少数据在内存中占用的空间</span><br><span class="line">def reduce_mem_usage(df):</span><br><span class="line">    &quot;&quot;&quot; iterate through all the columns of a dataframe and modify the data type</span><br><span class="line">        to reduce memory usage.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    start_mem &#x3D; df.memory_usage().sum()</span><br><span class="line">    print(&#39;Memory usage of dataframe is &#123;:.2f&#125; MB&#39;.format(start_mem))</span><br><span class="line"></span><br><span class="line">    for col in df.columns:</span><br><span class="line">        col_type &#x3D; df[col].dtype</span><br><span class="line"></span><br><span class="line">        if col_type !&#x3D; object:</span><br><span class="line">            c_min &#x3D; df[col].min()</span><br><span class="line">            c_max &#x3D; df[col].max()</span><br><span class="line">            if str(col_type)[:3] &#x3D;&#x3D; &#39;int&#39;:</span><br><span class="line">                if c_min &gt; np.iinfo(np.int8).min and c_max &lt; np.iinfo(np.int8).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.int8)</span><br><span class="line">                elif c_min &gt; np.iinfo(np.int16).min and c_max &lt; np.iinfo(np.int16).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.int16)</span><br><span class="line">                elif c_min &gt; np.iinfo(np.int32).min and c_max &lt; np.iinfo(np.int32).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.int32)</span><br><span class="line">                elif c_min &gt; np.iinfo(np.int64).min and c_max &lt; np.iinfo(np.int64).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.int64)</span><br><span class="line">            else:</span><br><span class="line">                if c_min &gt; np.finfo(np.float16).min and c_max &lt; np.finfo(np.float16).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.float16)</span><br><span class="line">                elif c_min &gt; np.finfo(np.float32).min and c_max &lt; np.finfo(np.float32).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.float32)</span><br><span class="line">                else:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.float64)</span><br><span class="line">        else:</span><br><span class="line">            df[col] &#x3D; df[col].astype(&#39;category&#39;)</span><br><span class="line"></span><br><span class="line">    end_mem &#x3D; df.memory_usage().sum()</span><br><span class="line">    print(&#39;Memory usage after optimization is: &#123;:.2f&#125; MB&#39;.format(end_mem))</span><br><span class="line">    print(&#39;Decreased by &#123;:.1f&#125;%&#39;.format(100 * (start_mem - end_mem) &#x2F; start_mem))</span><br><span class="line">    return df</span><br><span class="line"></span><br><span class="line">sample_feature &#x3D; reduce_mem_usage(pd.read_csv(&quot;data_for_tree.csv&quot;))</span><br></pre></td></tr></table></figure>
+
+<pre><code>Memory usage of dataframe is 62099672.00 MB
+Memory usage after optimization is: 16520303.00 MB
+Decreased by 73.4%</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 返回 x in sample_feature.columns not include [&#39;price&#39;,&#39;brand&#39;,&#39;model&#39;,&#39;brand&#39;] 的列表</span><br><span class="line">continuous_feature_names &#x3D; [x for x in sample_feature.columns if x not in [&#39;price&#39;,&#39;brand&#39;,&#39;model&#39;,&#39;brand&#39;]]</span><br></pre></td></tr></table></figure>
+
+<h1 id="线性回归-amp-五折交叉验证-amp-模拟真实业务情况"><a href="#线性回归-amp-五折交叉验证-amp-模拟真实业务情况" class="headerlink" title="线性回归 &amp; 五折交叉验证 &amp; 模拟真实业务情况"></a>线性回归 &amp; 五折交叉验证 &amp; 模拟真实业务情况</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sample_feature &#x3D; sample_feature.dropna().replace(&#39;-&#39;, 0).reset_index(drop&#x3D;True)</span><br><span class="line">sample_feature[&#39;notRepairedDamage&#39;] &#x3D; sample_feature[&#39;notRepairedDamage&#39;].astype(np.float32)</span><br><span class="line">train &#x3D; sample_feature[continuous_feature_names + [&#39;price&#39;]]</span><br><span class="line"></span><br><span class="line">train_X &#x3D; train[continuous_feature_names]</span><br><span class="line">train_y &#x3D; train[&#39;price&#39;]</span><br><span class="line">&#96;</span><br></pre></td></tr></table></figure>
+
+<h2 id="简单建模"><a href="#简单建模" class="headerlink" title="简单建模"></a>简单建模</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line"></span><br><span class="line">model &#x3D; LinearRegression(normalize&#x3D;True)</span><br><span class="line"></span><br><span class="line">model &#x3D; model.fit(train_X, train_y)</span><br><span class="line"></span><br><span class="line"># 查看训练的线性回归模型的截距（intercept）与权重(coef)</span><br><span class="line">&#39;intercept:&#39;+ str(model.intercept_)</span><br><span class="line"></span><br><span class="line">print(sorted(dict(zip(continuous_feature_names, model.coef_)).items(), key&#x3D;lambda x:x[1], reverse&#x3D;True))</span><br></pre></td></tr></table></figure>
+
+<pre><code>[(&apos;v_6&apos;, 3367064.3416418717), 
+(&apos;v_8&apos;, 700675.5609398251),
+ (&apos;v_9&apos;, 170630.27723215616), 
+(&apos;v_7&apos;, 32322.661931980558), 
+(&apos;v_12&apos;, 20473.670796988994), 
+(&apos;v_3&apos;, 17868.07954151303), 
+(&apos;v_11&apos;, 11474.9389967116), 
+(&apos;v_13&apos;, 11261.764560019501), 
+(&apos;v_10&apos;, 2683.9200906064084), 
+(&apos;gearbox&apos;, 881.8225039250154), 
+(&apos;fuelType&apos;, 363.9042507216036), 
+(&apos;bodyType&apos;, 189.60271012073036), 
+(&apos;city&apos;, 44.94975120522736), 
+(&apos;power&apos;, 28.553901616752857), 
+(&apos;brand_price_median&apos;, 0.5103728134078609), 
+(&apos;brand_price_std&apos;, 0.4503634709263256), 
+(&apos;brand_amount&apos;, 0.14881120395065583), 
+(&apos;brand_price_max&apos;, 0.0031910186703138638), 
+(&apos;SaleID&apos;, 5.355989919860593e-05), 
+(&apos;offerType&apos;, 4.397239536046982e-06), 
+(&apos;train&apos;, 2.7939677238464355e-07), 
+(&apos;seller&apos;, -2.873130142688751e-07), 
+(&apos;brand_price_sum&apos;, -2.175006868187596e-05), 
+(&apos;name&apos;, -0.0002980012713074109), 
+(&apos;used_time&apos;, -0.002515894332880479), 
+(&apos;brand_price_average&apos;, -0.404904845101148), 
+(&apos;brand_price_min&apos;, -2.2467753486888244), 
+(&apos;power_bin&apos;, -34.42064411727887), 
+(&apos;v_14&apos;, -274.7841180777388), 
+(&apos;kilometer&apos;, -372.89752666073025), 
+(&apos;notRepairedDamage&apos;, -495.1903844628239), 
+(&apos;v_0&apos;, -2045.0549573558887), 
+(&apos;v_5&apos;, -11022.98624082137), 
+(&apos;v_4&apos;, -15121.731109860013), 
+(&apos;v_2&apos;, -26098.29992055148), 
+(&apos;v_1&apos;, -45556.18929726381)]</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">subsample_index &#x3D; np.random.randint(low&#x3D;0, high&#x3D;len(train_y), size&#x3D;50)</span><br><span class="line">#绘制特征v_9的值与标签的散点图，图片发现模型的预测结果（蓝色点）与真实标签（黑色点）的分布差异较大，</span><br><span class="line"># 且部分预测值出现了小于0的情况，说明我们的模型存在一些问题</span><br><span class="line">plt.scatter(train_X[&#39;v_9&#39;][subsample_index], train_y[subsample_index], color&#x3D;&#39;black&#39;)</span><br><span class="line">plt.scatter(train_X[&#39;v_9&#39;][subsample_index], model.predict(train_X.loc[subsample_index]), color&#x3D;&#39;blue&#39;)</span><br><span class="line">plt.xlabel(&#39;v_9&#39;)</span><br><span class="line">plt.ylabel(&#39;price&#39;)</span><br><span class="line">plt.legend([&#39;True Price&#39;,&#39;Predicted Price&#39;],loc&#x3D;&#39;upper right&#39;)</span><br><span class="line">print(&#39;The predicted price is obvious different from true price&#39;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/04/01/G8VrRI.png" alt="1"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ML/" rel="tag"># ML</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/28/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task3/" rel="prev" title="Datawhale零基础入门数据挖掘-Task3">
+      <i class="fa fa-chevron-left"></i> Datawhale零基础入门数据挖掘-Task3
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相关原理"><span class="nav-number">1.</span> <span class="nav-text">相关原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性回归模型"><span class="nav-number">1.1.</span> <span class="nav-text">线性回归模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树模型"><span class="nav-number">1.2.</span> <span class="nav-text">决策树模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GBDT模型"><span class="nav-number">1.3.</span> <span class="nav-text">GBDT模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XGBoost模型"><span class="nav-number">1.4.</span> <span class="nav-text">XGBoost模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LightGBM模型"><span class="nav-number">1.5.</span> <span class="nav-text">LightGBM模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#教材推荐"><span class="nav-number">1.6.</span> <span class="nav-text">教材推荐</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#读取数据"><span class="nav-number">2.</span> <span class="nav-text">读取数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线性回归-amp-五折交叉验证-amp-模拟真实业务情况"><span class="nav-number">3.</span> <span class="nav-text">线性回归 &amp; 五折交叉验证 &amp; 模拟真实业务情况</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单建模"><span class="nav-number">3.1.</span> <span class="nav-text">简单建模</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">happybear</p>
+  <div class="site-description" itemprop="description">happybear的个人博客,主要涉及到编程(C++,Python,Linux),个人提升学习</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/happybear1234" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;happybear1234" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">happybear</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">71k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:05</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-firestore.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey   : '',
+      projectId: ''
+    });
+
+    function getCount(doc, increaseCount) {
+      // IncreaseCount will be false when not in article page
+      return doc.get().then(d => {
+        var count = 0;
+        if (!d.exists) { // Has no data, initialize count
+          if (increaseCount) {
+            doc.set({
+              count: 1
+            });
+            count = 1;
+          }
+        } else { // Has data
+          count = d.data().count;
+          if (increaseCount) {
+            // If first view this article
+            doc.set({ // Increase count
+              count: count + 1
+            });
+            count++;
+          }
+        }
+
+        return count;
+      });
+    }
+
+    function appendCountTo(el) {
+      return count => {
+        el.innerText = count;
+      }
+    }
+  </script>
+  <script>
+    (function() {
+      var db = firebase.firestore();
+      var articles = db.collection('articles');
+
+      if (CONFIG.page.isPost) { // Is article page
+        var title = document.querySelector('.post-title').innerText.trim();
+        var doc = articles.doc(title);
+        var increaseCount = CONFIG.hostname === location.hostname;
+        if (localStorage.getItem(title)) {
+          increaseCount = false;
+        } else {
+          // Mark as visited
+          localStorage.setItem(title, true);
+        }
+        getCount(doc, increaseCount).then(appendCountTo(document.querySelector('.firestore-visitors-count')));
+      } else if (CONFIG.page.isHome) { // Is index page
+        var promises = [...document.querySelectorAll('.post-title')].map(element => {
+          var title = element.innerText.trim();
+          var doc = articles.doc(title);
+          return getCount(doc);
+        });
+        Promise.all(promises).then(counts => {
+          var metas = document.querySelectorAll('.firestore-visitors-count');
+          counts.forEach((val, idx) => {
+            appendCountTo(metas[idx])(val);
+          });
+        });
+      }
+    })();
+  </script>
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'c83bf087982f58c4586a',
+      clientSecret: 'ed1f6d1814cb6dec62fefd737d4f7196a7aebfb4',
+      repo        : 'happybear1234-blog-comments',
+      owner       : 'happybear1234',
+      admin       : ['happybear1234'],
+      id          : 'ba5d15b0f4d60e6dd87d39959f272fe8',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

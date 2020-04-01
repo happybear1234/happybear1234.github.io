@@ -1,6 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Datawhale零基础入门数据挖掘-Task4</title>
+    <url>/2020/04/01/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task4/</url>
+    <content><![CDATA[<ul>
+<li>了解常用的机器学习模型，并掌握机器学习模型的建模与调参流程</li>
+</ul>
+<h1 id="相关原理"><a href="#相关原理" class="headerlink" title="相关原理"></a>相关原理</h1><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><p><a href="https://zhuanlan.zhihu.com/p/49480391" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/49480391</a></p>
+<h2 id="决策树模型"><a href="#决策树模型" class="headerlink" title="决策树模型"></a>决策树模型</h2><p><a href="https://zhuanlan.zhihu.com/p/65304798" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/65304798</a></p>
+<h2 id="GBDT模型"><a href="#GBDT模型" class="headerlink" title="GBDT模型"></a>GBDT模型</h2><p><a href="https://zhuanlan.zhihu.com/p/45145899" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/45145899</a></p>
+<h2 id="XGBoost模型"><a href="#XGBoost模型" class="headerlink" title="XGBoost模型"></a>XGBoost模型</h2><p><a href="https://zhuanlan.zhihu.com/p/86816771" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/86816771</a></p>
+<h2 id="LightGBM模型"><a href="#LightGBM模型" class="headerlink" title="LightGBM模型"></a>LightGBM模型</h2><p><a href="https://zhuanlan.zhihu.com/p/89360721" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/89360721</a></p>
+<h2 id="教材推荐"><a href="#教材推荐" class="headerlink" title="教材推荐"></a>教材推荐</h2><ul>
+<li>《机器学习》 <a href="https://book.douban.com/subject/26708119/" target="_blank" rel="noopener">https://book.douban.com/subject/26708119/</a></li>
+<li>《统计学习方法》 <a href="https://book.douban.com/subject/10590856/" target="_blank" rel="noopener">https://book.douban.com/subject/10590856/</a></li>
+<li>《Python大战机器学习》 <a href="https://book.douban.com/subject/26987890/" target="_blank" rel="noopener">https://book.douban.com/subject/26987890/</a></li>
+<li>《面向机器学习的特征工程》 <a href="https://book.douban.com/subject/26826639/" target="_blank" rel="noopener">https://book.douban.com/subject/26826639/</a></li>
+<li>《数据科学家访谈录》 <a href="https://book.douban.com/subject/30129410/" target="_blank" rel="noopener">https://book.douban.com/subject/30129410/</a></li>
+</ul>
+<h1 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># reduce_mem_usage 函数通过调整数据类型，帮助我们减少数据在内存中占用的空间</span><br><span class="line">def reduce_mem_usage(df):</span><br><span class="line">    &quot;&quot;&quot; iterate through all the columns of a dataframe and modify the data type</span><br><span class="line">        to reduce memory usage.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    start_mem &#x3D; df.memory_usage().sum()</span><br><span class="line">    print(&#39;Memory usage of dataframe is &#123;:.2f&#125; MB&#39;.format(start_mem))</span><br><span class="line"></span><br><span class="line">    for col in df.columns:</span><br><span class="line">        col_type &#x3D; df[col].dtype</span><br><span class="line"></span><br><span class="line">        if col_type !&#x3D; object:</span><br><span class="line">            c_min &#x3D; df[col].min()</span><br><span class="line">            c_max &#x3D; df[col].max()</span><br><span class="line">            if str(col_type)[:3] &#x3D;&#x3D; &#39;int&#39;:</span><br><span class="line">                if c_min &gt; np.iinfo(np.int8).min and c_max &lt; np.iinfo(np.int8).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.int8)</span><br><span class="line">                elif c_min &gt; np.iinfo(np.int16).min and c_max &lt; np.iinfo(np.int16).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.int16)</span><br><span class="line">                elif c_min &gt; np.iinfo(np.int32).min and c_max &lt; np.iinfo(np.int32).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.int32)</span><br><span class="line">                elif c_min &gt; np.iinfo(np.int64).min and c_max &lt; np.iinfo(np.int64).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.int64)</span><br><span class="line">            else:</span><br><span class="line">                if c_min &gt; np.finfo(np.float16).min and c_max &lt; np.finfo(np.float16).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.float16)</span><br><span class="line">                elif c_min &gt; np.finfo(np.float32).min and c_max &lt; np.finfo(np.float32).max:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.float32)</span><br><span class="line">                else:</span><br><span class="line">                    df[col] &#x3D; df[col].astype(np.float64)</span><br><span class="line">        else:</span><br><span class="line">            df[col] &#x3D; df[col].astype(&#39;category&#39;)</span><br><span class="line"></span><br><span class="line">    end_mem &#x3D; df.memory_usage().sum()</span><br><span class="line">    print(&#39;Memory usage after optimization is: &#123;:.2f&#125; MB&#39;.format(end_mem))</span><br><span class="line">    print(&#39;Decreased by &#123;:.1f&#125;%&#39;.format(100 * (start_mem - end_mem) &#x2F; start_mem))</span><br><span class="line">    return df</span><br><span class="line"></span><br><span class="line">sample_feature &#x3D; reduce_mem_usage(pd.read_csv(&quot;data_for_tree.csv&quot;))</span><br></pre></td></tr></table></figure>
+
+<pre><code>Memory usage of dataframe is 62099672.00 MB
+Memory usage after optimization is: 16520303.00 MB
+Decreased by 73.4%</code></pre><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 返回 x in sample_feature.columns not include [&#39;price&#39;,&#39;brand&#39;,&#39;model&#39;,&#39;brand&#39;] 的列表</span><br><span class="line">continuous_feature_names &#x3D; [x for x in sample_feature.columns if x not in [&#39;price&#39;,&#39;brand&#39;,&#39;model&#39;,&#39;brand&#39;]]</span><br></pre></td></tr></table></figure>
+
+<h1 id="线性回归-amp-五折交叉验证-amp-模拟真实业务情况"><a href="#线性回归-amp-五折交叉验证-amp-模拟真实业务情况" class="headerlink" title="线性回归 &amp; 五折交叉验证 &amp; 模拟真实业务情况"></a>线性回归 &amp; 五折交叉验证 &amp; 模拟真实业务情况</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sample_feature &#x3D; sample_feature.dropna().replace(&#39;-&#39;, 0).reset_index(drop&#x3D;True)</span><br><span class="line">sample_feature[&#39;notRepairedDamage&#39;] &#x3D; sample_feature[&#39;notRepairedDamage&#39;].astype(np.float32)</span><br><span class="line">train &#x3D; sample_feature[continuous_feature_names + [&#39;price&#39;]]</span><br><span class="line"></span><br><span class="line">train_X &#x3D; train[continuous_feature_names]</span><br><span class="line">train_y &#x3D; train[&#39;price&#39;]</span><br><span class="line">&#96;</span><br></pre></td></tr></table></figure>
+
+<h2 id="简单建模"><a href="#简单建模" class="headerlink" title="简单建模"></a>简单建模</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line"></span><br><span class="line">model &#x3D; LinearRegression(normalize&#x3D;True)</span><br><span class="line"></span><br><span class="line">model &#x3D; model.fit(train_X, train_y)</span><br><span class="line"></span><br><span class="line"># 查看训练的线性回归模型的截距（intercept）与权重(coef)</span><br><span class="line">&#39;intercept:&#39;+ str(model.intercept_)</span><br><span class="line"></span><br><span class="line">print(sorted(dict(zip(continuous_feature_names, model.coef_)).items(), key&#x3D;lambda x:x[1], reverse&#x3D;True))</span><br></pre></td></tr></table></figure>
+
+<pre><code>[(&apos;v_6&apos;, 3367064.3416418717), 
+(&apos;v_8&apos;, 700675.5609398251),
+ (&apos;v_9&apos;, 170630.27723215616), 
+(&apos;v_7&apos;, 32322.661931980558), 
+(&apos;v_12&apos;, 20473.670796988994), 
+(&apos;v_3&apos;, 17868.07954151303), 
+(&apos;v_11&apos;, 11474.9389967116), 
+(&apos;v_13&apos;, 11261.764560019501), 
+(&apos;v_10&apos;, 2683.9200906064084), 
+(&apos;gearbox&apos;, 881.8225039250154), 
+(&apos;fuelType&apos;, 363.9042507216036), 
+(&apos;bodyType&apos;, 189.60271012073036), 
+(&apos;city&apos;, 44.94975120522736), 
+(&apos;power&apos;, 28.553901616752857), 
+(&apos;brand_price_median&apos;, 0.5103728134078609), 
+(&apos;brand_price_std&apos;, 0.4503634709263256), 
+(&apos;brand_amount&apos;, 0.14881120395065583), 
+(&apos;brand_price_max&apos;, 0.0031910186703138638), 
+(&apos;SaleID&apos;, 5.355989919860593e-05), 
+(&apos;offerType&apos;, 4.397239536046982e-06), 
+(&apos;train&apos;, 2.7939677238464355e-07), 
+(&apos;seller&apos;, -2.873130142688751e-07), 
+(&apos;brand_price_sum&apos;, -2.175006868187596e-05), 
+(&apos;name&apos;, -0.0002980012713074109), 
+(&apos;used_time&apos;, -0.002515894332880479), 
+(&apos;brand_price_average&apos;, -0.404904845101148), 
+(&apos;brand_price_min&apos;, -2.2467753486888244), 
+(&apos;power_bin&apos;, -34.42064411727887), 
+(&apos;v_14&apos;, -274.7841180777388), 
+(&apos;kilometer&apos;, -372.89752666073025), 
+(&apos;notRepairedDamage&apos;, -495.1903844628239), 
+(&apos;v_0&apos;, -2045.0549573558887), 
+(&apos;v_5&apos;, -11022.98624082137), 
+(&apos;v_4&apos;, -15121.731109860013), 
+(&apos;v_2&apos;, -26098.29992055148), 
+(&apos;v_1&apos;, -45556.18929726381)]</code></pre><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from matplotlib import pyplot as plt</span><br><span class="line">subsample_index &#x3D; np.random.randint(low&#x3D;0, high&#x3D;len(train_y), size&#x3D;50)</span><br><span class="line">#绘制特征v_9的值与标签的散点图，图片发现模型的预测结果（蓝色点）与真实标签（黑色点）的分布差异较大，</span><br><span class="line"># 且部分预测值出现了小于0的情况，说明我们的模型存在一些问题</span><br><span class="line">plt.scatter(train_X[&#39;v_9&#39;][subsample_index], train_y[subsample_index], color&#x3D;&#39;black&#39;)</span><br><span class="line">plt.scatter(train_X[&#39;v_9&#39;][subsample_index], model.predict(train_X.loc[subsample_index]), color&#x3D;&#39;blue&#39;)</span><br><span class="line">plt.xlabel(&#39;v_9&#39;)</span><br><span class="line">plt.ylabel(&#39;price&#39;)</span><br><span class="line">plt.legend([&#39;True Price&#39;,&#39;Predicted Price&#39;],loc&#x3D;&#39;upper right&#39;)</span><br><span class="line">print(&#39;The predicted price is obvious different from true price&#39;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/04/01/G8VrRI.png" alt="1"></p>
+]]></content>
+      <categories>
+        <category>数据挖掘及机器学习</category>
+      </categories>
+      <tags>
+        <tag>ML</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Datawhale零基础入门数据挖掘-Task3</title>
     <url>/2020/03/28/Datawhale%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98-Task3/</url>
     <content><![CDATA[<ul>
