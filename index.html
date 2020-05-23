@@ -191,6 +191,225 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://happybear1234.github.io/2020/05/23/%E8%A5%BF%E7%93%9C%E4%B9%A6%E4%B9%A0%E9%A2%983-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="happybear">
+      <meta itemprop="description" content="happybear的个人博客,主要涉及到编程(C++,Python,Linux),个人提升学习">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="happybear">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/23/%E8%A5%BF%E7%93%9C%E4%B9%A6%E4%B9%A0%E9%A2%983-5/" class="post-title-link" itemprop="url">西瓜书习题3-5</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-23 16:06:17 / 修改时间：22:54:22" itemprop="dateCreated datePublished" datetime="2020-05-23T16:06:17+08:00">2020-05-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-users"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="firestore-visitors-count"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>参考:<br>[1]<a href="https://www.cnblogs.com/judejie/p/8999832.html" target="_blank" rel="noopener">https://www.cnblogs.com/judejie/p/8999832.html</a><br>[2]<a href="https://blog.csdn.net/zouxy09/article/details/20319673" target="_blank" rel="noopener">https://blog.csdn.net/zouxy09/article/details/20319673</a><br>[3]<a href="https://blog.csdn.net/Snoopy_Yuan/article/details/63684219?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/Snoopy_Yuan/article/details/63684219?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase</a></p>
+<p>完整代码:<br>(sklearn库实现)<a href="https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.5.py" target="_blank" rel="noopener">https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.5.py</a><br>(梯度下降实现)<a href="https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.5_self_def.py" target="_blank" rel="noopener">https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.5_self_def.py</a></p>
+<blockquote>
+<p>3.3 编程实现对率回归,并给出西瓜数据集(如下)上的结果.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>密度</th>
+<th>含糖率</th>
+<th>好瓜</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.697</td>
+<td>0.46</td>
+<td>是</td>
+</tr>
+<tr>
+<td>0.774</td>
+<td>0.376</td>
+<td>是</td>
+</tr>
+<tr>
+<td>0.634</td>
+<td>0.264</td>
+<td>是</td>
+</tr>
+<tr>
+<td>0.608</td>
+<td>0.318</td>
+<td>是</td>
+</tr>
+<tr>
+<td>0.556</td>
+<td>0.215</td>
+<td>是</td>
+</tr>
+<tr>
+<td>0.403</td>
+<td>0.237</td>
+<td>是</td>
+</tr>
+<tr>
+<td>0.481</td>
+<td>0.149</td>
+<td>是</td>
+</tr>
+<tr>
+<td>0.437</td>
+<td>0.211</td>
+<td>是</td>
+</tr>
+<tr>
+<td>0.666</td>
+<td>0.091</td>
+<td>否</td>
+</tr>
+<tr>
+<td>0.243</td>
+<td>0.267</td>
+<td>否</td>
+</tr>
+<tr>
+<td>0.245</td>
+<td>0.057</td>
+<td>否</td>
+</tr>
+<tr>
+<td>0.343</td>
+<td>0.099</td>
+<td>否</td>
+</tr>
+<tr>
+<td>0.639</td>
+<td>0.161</td>
+<td>否</td>
+</tr>
+<tr>
+<td>0.657</td>
+<td>0.198</td>
+<td>否</td>
+</tr>
+<tr>
+<td>0.36</td>
+<td>0.37</td>
+<td>否</td>
+</tr>
+<tr>
+<td>0.593</td>
+<td>0.042</td>
+<td>否</td>
+</tr>
+<tr>
+<td>0.719</td>
+<td>0.103</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p>因此将以上数据中好瓜表示为”1”,不好的瓜表示为”0”,转换成csv文件便于读取</p>
+<h1 id="公式说明"><a href="#公式说明" class="headerlink" title="公式说明"></a>公式说明</h1><p>基础线性模型:<br>$$f(x)=\omega_{1}x_{1}+\omega_{2}x_{2}…+\omega_{d}x_{d}+b$$<br>可转化为向量:<br>$$f(x)={\omega}x^T+b$$<br>继而令$\beta=({\omega};b)$,$\hat{x}=(x;1)$,那么(注:此处均作为列向量,与西瓜书上相反,):<br>$$f(x)={\omega}x^T+b={\beta}\hat{x}^T$$<br>为了解决此处的二分类问题,将预测值映射成$y\in{0,1}$的值,即转化为线性回归,常常采用以下的对数几率函数(sigmoid函数)代替:<br>$$y=\frac{1}{1+e^{-\beta\hat{x}^T}}$$<br>因此,只要求得$\omega$和$b$的值即可,以下通过极大似然法来估计$\omega$和$b$的值:<br>$$\psi(\beta)=\sum_{i=1}^{m}(y_{i}\beta\hat{x}^T_{i}-ln(1+e^{\beta\hat{x}^T_{i}}))$$<br>将上式最大化转化为最小化,便于后面梯度下降求解,如西瓜书P59公式3.27:<br>$$\psi(\beta)=\sum_{i=1}^{m}(-y_{i}\beta\hat{x}^T_{i}+ln(1+e^{\beta\hat{x}^T_{i}}))$$</p>
+<p>该函数为连续可导凸函数(对应海塞矩阵正定),因此可用梯度下降求得最优解,梯度为:<br>$$\frac{\varphi\psi(\beta)}{\varphi\beta}=\sum_{i=1}^{m}(-y_{i}+\frac{1}{1+e^{-\beta\hat{x}^T}})\hat{x}_{i}$$<br>迭代过程(其中$\lambda$为步长)为:<br>$$\beta^{t+1}=\beta^{t}-\lambda\frac{\varphi\psi(\beta)}{\varphi\beta}$$</p>
+<h1 id="sklearn库实现"><a href="#sklearn库实现" class="headerlink" title="sklearn库实现"></a>sklearn库实现</h1><h2 id="载入数据-预处理"><a href="#载入数据-预处理" class="headerlink" title="载入数据,预处理"></a>载入数据,预处理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dataset &#x3D; np.loadtxt(&#39;&#x2F;home&#x2F;data&#x2F;watermelon_3a.csv&#39;, delimiter&#x3D;&#39;,&#39;)</span><br><span class="line"></span><br><span class="line">X &#x3D; dataset[:, 1 : 3]</span><br><span class="line">y &#x3D; dataset[:, 3]</span><br><span class="line">print(np.shape(X))</span><br></pre></td></tr></table></figure>
+<pre><code>(17, 2)</code></pre><p>绘制分散图,查看数据分散情况:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f1 &#x3D; plt.figure(1)</span><br><span class="line">plt.title(&#39;watermelon_3a&#39;)</span><br><span class="line">plt.xlabel(&#39;density&#39;)</span><br><span class="line">plt.ylabel(&#39;rate_sugar&#39;)</span><br><span class="line">plt.scatter(X[y &#x3D;&#x3D; 0, 0], X[y &#x3D;&#x3D; 0, 1], marker &#x3D; &#39;o&#39;, color &#x3D; &#39;k&#39;, s &#x3D; 100, label&#x3D; &#39;bad&#39;)</span><br><span class="line">plt.scatter(X[y &#x3D;&#x3D; 1, 0], X[y &#x3D;&#x3D;1, 1], marker&#x3D; &#39;o&#39;, color &#x3D; &#39;g&#39;, s &#x3D; 100, label &#x3D; &#39;good&#39;)</span><br><span class="line">plt.legend(loc &#x3D; &#39;upper right&#39;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="" alt="1"></p>
+<h2 id="sklearn逻辑回归库拟合"><a href="#sklearn逻辑回归库拟合" class="headerlink" title="sklearn逻辑回归库拟合"></a>sklearn逻辑回归库拟合</h2><p>调用sklearn中的逻辑回归模型进行训练和预测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from sklearn import model_selection</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn import metrics</span><br><span class="line">import matplotlib.pylab as pl</span><br><span class="line"></span><br><span class="line"># 切分数据集:留出法 返回 划分好的训练集测试集样本和训练集测试集标签</span><br><span class="line">X_train, X_test, y_train, y_test &#x3D; model_selection.train_test_split(X, y, test_size&#x3D;0.5, random_state&#x3D;0)</span><br><span class="line"></span><br><span class="line"># 训练模型</span><br><span class="line">log_model &#x3D; LogisticRegression()</span><br><span class="line">log_model.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"># 模型测试</span><br><span class="line">y_pred &#x3D; log_model.predict(X_test)</span><br></pre></td></tr></table></figure>
+<p>打印混淆矩阵和相关度量,结果如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(metrics.confusion_matrix(y_test, y_pred))</span><br><span class="line">print(metrics.classification_report(y_test, y_pred))</span><br><span class="line">precision, recall, thresholds &#x3D; metrics.precision_recall_curve(y_test, y_pred)</span><br></pre></td></tr></table></figure>
+<pre><code>[[3 2]
+ [1 3]]
+
+precision    recall  f1-score   support
+
+     0.0       0.75      0.60      0.67         5
+     1.0       0.60      0.75      0.67         4
+
+    accuracy                           0.67         9
+   macro avg       0.68      0.68      0.67         9
+weighted avg       0.68      0.67      0.67         9</code></pre><p>这里选择的留出法抽取样本,因为样本比较少,拟合效果一般,预测精度只有67%,可以采用自助法或者交叉验证法重新抽样,进一步选择最优模型</p>
+<h2 id="绘制决策边界"><a href="#绘制决策边界" class="headerlink" title="绘制决策边界"></a>绘制决策边界</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">f2 &#x3D; plt.figure(2)</span><br><span class="line">h &#x3D; 0.01</span><br><span class="line">x0_min, x0_max &#x3D; X[:, 0].min() - 0.1, X[:, 0].max() + 0.1</span><br><span class="line">x1_min, x1_max &#x3D; X[:, 1].min() - 0.1, X[:, 1].max() +0.1</span><br><span class="line">x0, x1&#x3D; np.meshgrid(np.arange(x0_min, x0_max, h), np.arange(x1_min, x1_max, h)) # 生成笛卡尔积坐标矩阵</span><br><span class="line"></span><br><span class="line">z &#x3D; log_model.predict(np.c_[x0.ravel(), x1.ravel()]) # c_ 按列合并, ravel 降成一维</span><br><span class="line"></span><br><span class="line">z &#x3D; z.reshape(x0.shape)</span><br><span class="line">plt.contourf(x0, x1, z, cmap &#x3D; pl.cm.Paired)# 等高线</span><br><span class="line"></span><br><span class="line">plt.title(&#39;watermelon_3a&#39;)</span><br><span class="line">plt.xlabel(&#39;density&#39;)</span><br><span class="line">plt.ylabel(&#39;rate_sugar&#39;)</span><br><span class="line">plt.scatter(X[y&#x3D;&#x3D;0, 0], X[y&#x3D;&#x3D;0, 1], marker&#x3D;&#39;o&#39;, color&#x3D;&#39;k&#39;, s&#x3D;100, label&#x3D;&#39;bad&#39;)</span><br><span class="line">plt.scatter(X[y&#x3D;&#x3D;1, 0], X[y&#x3D;&#x3D;1, 1], marker&#x3D;&#39;o&#39;, color&#x3D;&#39;g&#39;, s&#x3D;100, label&#x3D;&#39;good&#39;)</span><br><span class="line">plt.legend(loc&#x3D;&#39;upper right&#39;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="" alt="2"><br>可以看出训练出来的分类器还是可以分类出大多数示例</p>
+<h1 id="梯度下降法实现"><a href="#梯度下降法实现" class="headerlink" title="梯度下降法实现"></a>梯度下降法实现</h1><h2 id="实现以上公式"><a href="#实现以上公式" class="headerlink" title="实现以上公式"></a>实现以上公式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"># 1)实现 P59 公式3.27极大似然法</span><br><span class="line"></span><br><span class="line">def likelihood_sub(x, y, beta):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    :param x: 一个示例变量(行向量)</span><br><span class="line">    :param y:一个样品标签(行向量)</span><br><span class="line">    :param beta:3.27中矢量参数(行向量)</span><br><span class="line">    :return: 单个对数似然 3.27</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    return -y * np.dot(beta, x.T) + np.math.log(1 + np.math.exp(np.dot(beta, x.T)))</span><br><span class="line"></span><br><span class="line">def likelihood(X, y, beta):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    公式 3.27 :对数似然函数(交叉熵损失函数)</span><br><span class="line">    :param X: 示例变量矩阵</span><br><span class="line">    :param y:样本标签矩阵</span><br><span class="line">    :param beta:3.27中的矢量参数</span><br><span class="line">    :return: beta 的似然值</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    sum &#x3D; 0</span><br><span class="line">    m, n &#x3D; np.shape(X)</span><br><span class="line"></span><br><span class="line">    for i in range(m):</span><br><span class="line">        sum +&#x3D; likelihood_sub(X[i], y[i], beta)</span><br><span class="line">    return sum</span><br><span class="line"></span><br><span class="line"># 2)实现似然公式一阶偏导</span><br><span class="line">def sigmoid(x, beta):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    基础模型 S 形函数</span><br><span class="line">    P59 对数几率回归(逻辑回归)公式 3.23</span><br><span class="line">    :param x: 预测变量</span><br><span class="line">    :param beta: beta 变量</span><br><span class="line">    :return:S 形函数</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    return 1 &#x2F; (1 + np.math.exp(- np.dot(beta, x.T)))</span><br><span class="line">def partial_derivative(X, y, beta):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    P60 似然公式一阶偏导3.30</span><br><span class="line">    :param X:示例变量矩阵</span><br><span class="line">    :param y:样本标签矩阵</span><br><span class="line">    :param beta:3.27 中矢量参数</span><br><span class="line">    :return: beta 的偏导数,梯度</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    m, n &#x3D; np.shape(X)</span><br><span class="line">    pd &#x3D; np.zeros(n)</span><br><span class="line"></span><br><span class="line">    for i in range(m):</span><br><span class="line">        tmp &#x3D; -y[i] + sigmoid(X[i], beta)</span><br><span class="line">        for j in range(n):</span><br><span class="line">            pd[j] +&#x3D; X[i][j] * tmp</span><br><span class="line">    return pd</span><br></pre></td></tr></table></figure>
+<p>这里采用批量梯度下降法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def gradDscent(X, y, alpha, iterations, n):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    :param X:变量矩阵</span><br><span class="line">    :param y:样本标签数组</span><br><span class="line">    :return:3.27中beta参数最优解</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    cost &#x3D; np.zeros(iterations) # 构建 max_times 个 0 的数组</span><br><span class="line">    beta &#x3D; np.mat(np.zeros(n)) # 初始化 beta</span><br><span class="line"></span><br><span class="line">    for i in range(iterations):</span><br><span class="line">        # 梯度下降</span><br><span class="line">        output &#x3D; partial_derivative(X, y, beta)</span><br><span class="line">        beta &#x3D; beta - alpha * output</span><br><span class="line">        cost[i] &#x3D; likelihood(X, y, beta)</span><br><span class="line"></span><br><span class="line">    return beta, cost</span><br></pre></td></tr></table></figure>
+<h2 id="绘制收敛曲线"><a href="#绘制收敛曲线" class="headerlink" title="绘制收敛曲线"></a>绘制收敛曲线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def showConvergCurve(Iterations, Cost):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    :param Iterations: 迭代次数</span><br><span class="line">    :param Cost: 损失值数组</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    f1 &#x3D; plt.figure(1)</span><br><span class="line">    t &#x3D; np.arange(Iterations)</span><br><span class="line">    p1 &#x3D; plt.subplot(1,1,1)</span><br><span class="line">    p1.plot(t, Cost, &#39;r&#39;)</span><br><span class="line">    p1.set_xlabel(&#39;Iterations&#39;)</span><br><span class="line">    p1.set_ylabel(&#39;cost&#39;)</span><br><span class="line">    p1.set_title(&#39;The Gradient Descent Convergence Curve&#39;)</span><br><span class="line"></span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>这里步长取得0.1,迭代次数1500,在400次迭代后趋于稳定<br><img src="" alt="3"></p>
+<h2 id="绘制决策边界-1"><a href="#绘制决策边界-1" class="headerlink" title="绘制决策边界"></a>绘制决策边界</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def showLogRegression(X, y, Beta, N):</span><br><span class="line">    f2 &#x3D; plt.figure(2)</span><br><span class="line"></span><br><span class="line">    plt.title(&#39;The Logistic Regression Fitted Curve&#39;)</span><br><span class="line">    plt.xlabel(&#39;density&#39;)</span><br><span class="line">    plt.ylabel(&#39;rate_sugar&#39;)</span><br><span class="line">    # f &#x3D; Beta * X.transpose()</span><br><span class="line">    # plt.plot(X[:, 2], f.tolist()[0], &#39;r&#39;, label &#x3D; &#39;Prediction&#39;)</span><br><span class="line">    min_x &#x3D; min(X[:, 0])</span><br><span class="line">    max_x &#x3D; max(X[:, 0])</span><br><span class="line">    y_min_x &#x3D; (- Beta.tolist()[0][2] - Beta.tolist()[0][0] * min_x) &#x2F; Beta.tolist()[0][1] # 由线性模型 y &#x3D;  w1 * x1 + w2 * x2 +b</span><br><span class="line">    y_max_x &#x3D; (- Beta.tolist()[0][2] - Beta.tolist()[0][0] * max_x) &#x2F; Beta.tolist()[0][1]</span><br><span class="line">    plt.plot([min_x, max_x], [y_min_x, y_max_x], &#39;-g&#39;)</span><br><span class="line">    plt.scatter(X[y &#x3D;&#x3D; 0, 0], X[y &#x3D;&#x3D; 0, 1], marker&#x3D;&#39;o&#39;, color&#x3D;&#39;k&#39;, s&#x3D;100, label&#x3D;&#39;bad&#39;)</span><br><span class="line">    plt.scatter(X[y &#x3D;&#x3D; 1, 0], X[y &#x3D;&#x3D; 1, 1], marker&#x3D;&#39;o&#39;, color&#x3D;&#39;g&#39;, s&#x3D;100, label&#x3D;&#39;good&#39;)</span><br><span class="line">    plt.legend(loc&#x3D;&#39;upper right&#39;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="" alt="4"><br>看上去并没有sklearn库中逻辑回归分类器效果好,但是计算出来的精度却比分类器要高</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">def testLogRegres(Beta, test_x, test_y):</span><br><span class="line">    m, n &#x3D; np.shape(test_x)</span><br><span class="line">    matchCount &#x3D; 0</span><br><span class="line">    for i in range(m):</span><br><span class="line">        predict &#x3D; sigmoid(test_x[i], Beta) &gt; 0.5</span><br><span class="line">        if predict &#x3D;&#x3D; bool(test_y[i]):</span><br><span class="line">            matchCount +&#x3D; 1</span><br><span class="line">    accuracy &#x3D; float(matchCount) &#x2F; m</span><br><span class="line">    return accuracy</span><br><span class="line"></span><br><span class="line">def loadData():</span><br><span class="line">    dataset &#x3D; np.loadtxt(&#39;&#x2F;home&#x2F;data&#x2F;watermelon_3a.csv&#39;, delimiter&#x3D;&#39;,&#39;)</span><br><span class="line"></span><br><span class="line">    X &#x3D; dataset[:, 1: 3]</span><br><span class="line">    tmp &#x3D; np.ones(X.shape[0])</span><br><span class="line">    X &#x3D; np.insert(X, 2, values&#x3D;tmp, axis&#x3D;1) # 在最后一列插入全是 1 的列</span><br><span class="line">    y &#x3D; dataset[:, 3]</span><br><span class="line">    return X, y</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    alpha &#x3D; 0.1  # 迭代步长</span><br><span class="line">    iterations &#x3D; 1500  # 迭代次数上限</span><br><span class="line">    X, y &#x3D; loadData()</span><br><span class="line">    test_x &#x3D; X</span><br><span class="line">    test_y &#x3D; y</span><br><span class="line">    m, n &#x3D; np.shape(X)</span><br><span class="line">    beta, cost &#x3D; gradDscent(X, y, alpha, iterations, n)</span><br><span class="line">    print(beta)</span><br><span class="line">    showConvergCurve(iterations, cost)</span><br><span class="line">    showLogRegression(X, y, beta, n)</span><br><span class="line">    accuracy &#x3D; testLogRegres(beta, test_x, test_y)</span><br><span class="line">    print(&#39;The classify accuracy is: %.3f%%&#39; %(accuracy * 100))</span><br></pre></td></tr></table></figure>
+<pre><code>The classify accuracy is: 70.588%</code></pre>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://happybear1234.github.io/2020/04/28/%E8%A5%BF%E7%93%9C%E4%B9%A6%E4%B9%A0%E9%A2%981-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2532,7 +2751,7 @@ Name: price, Length: 150000, dtype: int64</code></pre><figure class="highlight p
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2586,12 +2805,12 @@ Name: price, Length: 150000, dtype: int64</code></pre><figure class="highlight p
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">86k</span>
+    <span title="站点总字数">94k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:25</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
