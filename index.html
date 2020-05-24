@@ -191,6 +191,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://happybear1234.github.io/2020/05/24/%E8%A5%BF%E7%93%9C%E4%B9%A6%E4%B9%A0%E9%A2%983-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="happybear">
+      <meta itemprop="description" content="happybear的个人博客,主要涉及到编程(C++,Python,Linux),个人提升学习">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="happybear">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/24/%E8%A5%BF%E7%93%9C%E4%B9%A6%E4%B9%A0%E9%A2%983-4/" class="post-title-link" itemprop="url">西瓜书习题3-4</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-24 21:49:45 / 修改时间：22:30:19" itemprop="dateCreated datePublished" datetime="2020-05-24T21:49:45+08:00">2020-05-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-users"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="firestore-visitors-count"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>参考:<a href="https://blog.csdn.net/Snoopy_Yuan/article/details/64131129" target="_blank" rel="noopener">https://blog.csdn.net/Snoopy_Yuan/article/details/64131129</a></p>
+<p>完整代码:<a href="https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.4/code/Practical_3.4.py" target="_blank" rel="noopener">https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.4/code/Practical_3.4.py</a></p>
+<blockquote>
+<p>习题3.4 选择两个UCI数据集，比较10折交叉验证法和留一法所估计出的对率回归的错误率</p>
+</blockquote>
+<p>这里从UCI分别选择了数据集<a href="http://archive.ics.uci.edu/ml/datasets/Iris" target="_blank" rel="noopener">Iris Data Set </a>和<a href="http://archive.ics.uci.edu/ml/datasets/Blood+Transfusion+Service+Center" target="_blank" rel="noopener"> Blood Transfusion Service Center Data Set</a>;通过sklearn库实现,seaborns进行可视化,另外seaborns自带iris的数据集,可以直接拿来用</p>
+<h1 id="载入数据-预处理"><a href="#载入数据-预处理" class="headerlink" title="载入数据,预处理"></a>载入数据,预处理</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import pandas as pd</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">iris &#x3D; sns.load_dataset(&#39;iris&#39;) # 在线载入自带的 iris 数据集</span><br><span class="line">X &#x3D; iris.values[:, 0 : 4]</span><br><span class="line">y &#x3D; iris.values[:, 4]</span><br><span class="line"></span><br><span class="line">sns.set(style&#x3D;&#39;white&#39;) # 风格设置</span><br><span class="line">g &#x3D; sns.pairplot(iris, hue&#x3D;&#39;species&#39;, markers&#x3D;[&#39;o&#39;, &#39;s&#39;, &#39;D&#39;]) # 变量关系组图</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/05/24/tSXph6.png" alt="1"></p>
+<p>可以看到iris数据类间比较分散,也是后面测试结果比较好的原因之一</p>
+<h1 id="sklearn库"><a href="#sklearn库" class="headerlink" title="sklearn库"></a>sklearn库</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn import metrics</span><br><span class="line">from sklearn import model_selection</span><br><span class="line"></span><br><span class="line">log_model &#x3D; LogisticRegression(max_iter&#x3D;1000) # 增加最大迭代次数,也可以减少数据量</span><br><span class="line">m, n &#x3D; np.shape(X)</span><br></pre></td></tr></table></figure>
+<h2 id="十折交叉训练"><a href="#十折交叉训练" class="headerlink" title="十折交叉训练"></a>十折交叉训练</h2><p>model_selection.cross_val_predict 指定模型直接就返回测试结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">y_pred_10_fold &#x3D; model_selection.cross_val_predict(log_model, X, y, cv&#x3D;10)</span><br><span class="line"></span><br><span class="line"># 打印精度</span><br><span class="line">accuracy_10_fold &#x3D; metrics.accuracy_score(y, y_pred_10_fold)</span><br><span class="line">print(&#39;The accuracy of 10-fold cross-validation:&#39;, accuracy_10_fold)</span><br></pre></td></tr></table></figure>
+<pre><code>The accuracy of 10-fold cross-validation: 0.9733333333333334</code></pre><h2 id="留一法"><a href="#留一法" class="headerlink" title="留一法"></a>留一法</h2><p>留一法相当于k折交叉训练中,把k取为所有的样例数m,因此要经过m次训练,用循环来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">accuracy_LOO &#x3D; 0</span><br><span class="line"># 计算 m 次测试的结果</span><br><span class="line">for train_index, test_index in model_selection.LeaveOneOut().split(X):</span><br><span class="line">    X_train, X_test &#x3D; X[train_index], X[test_index] # 训练集样本,测试集样本</span><br><span class="line">    y_train, y_test &#x3D; y[train_index], y[test_index] # 训练集标签, 测试集标签</span><br><span class="line">    log_model.fit(X_train, y_train) # 训练模型</span><br><span class="line">    y_pred_LOO &#x3D; log_model.predict(X_test) # 测试</span><br><span class="line">    if y_pred_LOO &#x3D;&#x3D; y_test:</span><br><span class="line">        accuracy_LOO +&#x3D; 1</span><br><span class="line">print(&#39;The accuracy of Leave-One-Out:&#39;, accuracy_LOO &#x2F; m)</span><br></pre></td></tr></table></figure>
+<pre><code>The accuracy of Leave-One-Out: 0.9666666666666667</code></pre><p>对于iris数据集,精度计较高,相应错误率较低</p>
+<p>类似的,对Transfusion数据集可视化:<br><img src="https://s1.ax1x.com/2020/05/24/tSXljg.png" alt="2"></p>
+<p>类间分散比较紧凑</p>
+<p>相应精度:<br>    The accuracy of 10-fold cross-validation: 0.7687165775401069<br>    The accuracy of Leave-One-Out: 0.7700534759358288</p>
+<p>通过以上对比,十折交叉验证法与留一法精度相差不大,而且通过实验留一法代码跑的时间更长,对于数据越大,这种现象越明显.<br>因此往后,选择十折交叉验证即可满足精度要求,节约运行成本</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://happybear1234.github.io/2020/05/23/%E8%A5%BF%E7%93%9C%E4%B9%A6%E4%B9%A0%E9%A2%983-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -222,7 +329,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-24 14:18:58" itemprop="dateModified" datetime="2020-05-24T14:18:58+08:00">2020-05-24</time>
+                <time title="修改时间：2020-05-24 22:05:24" itemprop="dateModified" datetime="2020-05-24T22:05:24+08:00">2020-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +374,7 @@
 
       
           <p>参考:<br>[1]<a href="https://www.cnblogs.com/judejie/p/8999832.html" target="_blank" rel="noopener">https://www.cnblogs.com/judejie/p/8999832.html</a><br>[2]<a href="https://blog.csdn.net/zouxy09/article/details/20319673" target="_blank" rel="noopener">https://blog.csdn.net/zouxy09/article/details/20319673</a><br>[3]<a href="https://blog.csdn.net/Snoopy_Yuan/article/details/63684219?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/Snoopy_Yuan/article/details/63684219?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase</a></p>
-<p>完整代码:<br>(sklearn库实现)<a href="https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.5.py" target="_blank" rel="noopener">https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.5.py</a><br>(梯度下降实现)<a href="https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.5_self_def.py" target="_blank" rel="noopener">https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.5_self_def.py</a></p>
+<p>完整代码:<br>(sklearn库实现)<a href="https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.3/code/Practical_3.3.py" target="_blank" rel="noopener">https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.3/code/Practical_3.3.py</a><br>(梯度下降实现)<a href="https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.3/code/Practical_3.3_self_def.py" target="_blank" rel="noopener">https://github.com/happybear1234/The-Watermelon-book-exercises/blob/master/Practical_3.3/code/Practical_3.3_self_def.py</a></p>
 <blockquote>
 <p>习题3.3 编程实现对率回归,并给出西瓜数据集(如下)上的结果.</p>
 </blockquote>
@@ -395,7 +502,7 @@ weighted avg       0.68      0.67      0.67         9</code></pre><p>这里选�
 <h2 id="绘制收敛曲线"><a href="#绘制收敛曲线" class="headerlink" title="绘制收敛曲线"></a>绘制收敛曲线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def showConvergCurve(Iterations, Cost):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    :param Iterations: 迭代次数</span><br><span class="line">    :param Cost: 损失值数组</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    f1 &#x3D; plt.figure(1)</span><br><span class="line">    t &#x3D; np.arange(Iterations)</span><br><span class="line">    p1 &#x3D; plt.subplot(1,1,1)</span><br><span class="line">    p1.plot(t, Cost, &#39;r&#39;)</span><br><span class="line">    p1.set_xlabel(&#39;Iterations&#39;)</span><br><span class="line">    p1.set_ylabel(&#39;cost&#39;)</span><br><span class="line">    p1.set_title(&#39;The Gradient Descent Convergence Curve&#39;)</span><br><span class="line"></span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
 <p>这里步长取得0.1,迭代次数1500,在800次迭代后趋于稳定<br><img src="https://s1.ax1x.com/2020/05/23/Yxa7Gj.png" alt="3"></p>
 <h2 id="绘制决策边界-1"><a href="#绘制决策边界-1" class="headerlink" title="绘制决策边界"></a>绘制决策边界</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def showLogRegression(X, y, Beta, N):</span><br><span class="line">    f2 &#x3D; plt.figure(2)</span><br><span class="line"></span><br><span class="line">    plt.title(&#39;The Logistic Regression Fitted Curve&#39;)</span><br><span class="line">    plt.xlabel(&#39;density&#39;)</span><br><span class="line">    plt.ylabel(&#39;rate_sugar&#39;)</span><br><span class="line">    # f &#x3D; Beta * X.transpose()</span><br><span class="line">    # plt.plot(X[:, 2], f.tolist()[0], &#39;r&#39;, label &#x3D; &#39;Prediction&#39;)</span><br><span class="line">    min_x &#x3D; min(X[:, 0])</span><br><span class="line">    max_x &#x3D; max(X[:, 0])</span><br><span class="line">    y_min_x &#x3D; (- Beta.tolist()[0][2] - Beta.tolist()[0][0] * min_x) &#x2F; Beta.tolist()[0][1] # 由线性模型 y &#x3D;  w1 * x1 + w2 * x2 +b</span><br><span class="line">    y_max_x &#x3D; (- Beta.tolist()[0][2] - Beta.tolist()[0][0] * max_x) &#x2F; Beta.tolist()[0][1]</span><br><span class="line">    plt.plot([min_x, max_x], [y_min_x, y_max_x], &#39;-g&#39;)</span><br><span class="line">    plt.scatter(X[y &#x3D;&#x3D; 0, 0], X[y &#x3D;&#x3D; 0, 1], marker&#x3D;&#39;o&#39;, color&#x3D;&#39;k&#39;, s&#x3D;100, label&#x3D;&#39;bad&#39;)</span><br><span class="line">    plt.scatter(X[y &#x3D;&#x3D; 1, 0], X[y &#x3D;&#x3D; 1, 1], marker&#x3D;&#39;o&#39;, color&#x3D;&#39;g&#39;, s&#x3D;100, label&#x3D;&#39;good&#39;)</span><br><span class="line">    plt.legend(loc&#x3D;&#39;upper right&#39;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="https://s1.ax1x.com/2020/05/23/Yxabzn.png" alt="4"><br>看上去并没有sklearn库中逻辑回归分类器效果好,但是计算出来的精度却比分类器要高</p>
+<p><img src="https://s1.ax1x.com/2020/05/23/Yxabzn.png" alt="4"><br>看上去并没有sklearn库中逻辑回归分类器效果好,但是计算出来的精度却比分类器要高(这里为了方便没有划分数据集,可以重新用sklearn分好的数据再做对比)</p>
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">def testLogRegres(Beta, test_x, test_y):</span><br><span class="line">    m, n &#x3D; np.shape(test_x)</span><br><span class="line">    matchCount &#x3D; 0</span><br><span class="line">    for i in range(m):</span><br><span class="line">        predict &#x3D; sigmoid(test_x[i], Beta) &gt; 0.5</span><br><span class="line">        if predict &#x3D;&#x3D; bool(test_y[i]):</span><br><span class="line">            matchCount +&#x3D; 1</span><br><span class="line">    accuracy &#x3D; float(matchCount) &#x2F; m</span><br><span class="line">    return accuracy</span><br><span class="line"></span><br><span class="line">def loadData():</span><br><span class="line">    dataset &#x3D; np.loadtxt(&#39;&#x2F;home&#x2F;data&#x2F;watermelon_3a.csv&#39;, delimiter&#x3D;&#39;,&#39;)</span><br><span class="line"></span><br><span class="line">    X &#x3D; dataset[:, 1: 3]</span><br><span class="line">    tmp &#x3D; np.ones(X.shape[0])</span><br><span class="line">    X &#x3D; np.insert(X, 2, values&#x3D;tmp, axis&#x3D;1) # 在最后一列插入全是 1 的列</span><br><span class="line">    y &#x3D; dataset[:, 3]</span><br><span class="line">    return X, y</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    alpha &#x3D; 0.1  # 迭代步长</span><br><span class="line">    iterations &#x3D; 1500  # 迭代次数上限</span><br><span class="line">    X, y &#x3D; loadData()</span><br><span class="line">    test_x &#x3D; X</span><br><span class="line">    test_y &#x3D; y</span><br><span class="line">    m, n &#x3D; np.shape(X)</span><br><span class="line">    beta, cost &#x3D; gradDscent(X, y, alpha, iterations, n)</span><br><span class="line">    print(beta)</span><br><span class="line">    showConvergCurve(iterations, cost)</span><br><span class="line">    showLogRegression(X, y, beta, n)</span><br><span class="line">    accuracy &#x3D; testLogRegres(beta, test_x, test_y)</span><br><span class="line">    print(&#39;The classify accuracy is: %.3f%%&#39; %(accuracy * 100))</span><br></pre></td></tr></table></figure>
 <pre><code>The classify accuracy is: 70.588%</code></pre>
       
@@ -2757,7 +2864,7 @@ Name: price, Length: 150000, dtype: int64</code></pre><figure class="highlight p
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2811,12 +2918,12 @@ Name: price, Length: 150000, dtype: int64</code></pre><figure class="highlight p
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">94k</span>
+    <span title="站点总字数">96k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:25</span>
+    <span title="站点阅读时长">1:27</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
