@@ -17,11 +17,11 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">y_pred_10_fold &#x3D; model_selection.cross_val_predict(log_model, X, y, cv&#x3D;10)</span><br><span class="line"></span><br><span class="line"># 打印精度</span><br><span class="line">accuracy_10_fold &#x3D; metrics.accuracy_score(y, y_pred_10_fold)</span><br><span class="line">print(&#39;The accuracy of 10-fold cross-validation:&#39;, accuracy_10_fold)</span><br></pre></td></tr></table></figure>
 <pre><code>The accuracy of 10-fold cross-validation: 0.9733333333333334</code></pre><h2 id="留一法"><a href="#留一法" class="headerlink" title="留一法"></a>留一法</h2><p>留一法相当于k折交叉训练中,把k取为所有的样例数m,因此要经过m次训练,用循环来实现</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">accuracy_LOO &#x3D; 0</span><br><span class="line"># 计算 m 次测试的结果</span><br><span class="line">for train_index, test_index in model_selection.LeaveOneOut().split(X):</span><br><span class="line">    X_train, X_test &#x3D; X[train_index], X[test_index] # 训练集样本,测试集样本</span><br><span class="line">    y_train, y_test &#x3D; y[train_index], y[test_index] # 训练集标签, 测试集标签</span><br><span class="line">    log_model.fit(X_train, y_train) # 训练模型</span><br><span class="line">    y_pred_LOO &#x3D; log_model.predict(X_test) # 测试</span><br><span class="line">    if y_pred_LOO &#x3D;&#x3D; y_test:</span><br><span class="line">        accuracy_LOO +&#x3D; 1</span><br><span class="line">print(&#39;The accuracy of Leave-One-Out:&#39;, accuracy_LOO &#x2F; m)</span><br></pre></td></tr></table></figure>
-<pre><code>The accuracy of Leave-One-Out: 0.9666666666666667</code></pre><p>对于iris数据集,精度计较高,相应错误率较低</p>
+<pre><code>The accuracy of Leave-One-Out: 0.9666666666666667</code></pre><p>对于iris数据集,精度比较高,相应错误率较低</p>
 <p>类似的,对Transfusion数据集可视化:<br><img src="https://s1.ax1x.com/2020/05/24/tSXljg.png" alt="2"></p>
 <p>类间分散比较紧凑</p>
 <p>相应精度:<br>    The accuracy of 10-fold cross-validation: 0.7687165775401069<br>    The accuracy of Leave-One-Out: 0.7700534759358288</p>
-<p>通过以上对比,十折交叉验证法与留一法精度相差不大,而且通过实验留一法代码跑的时间更长,对于数据越大,这种现象越明显.<br>因此往后,选择十折交叉验证即可满足精度要求,节约运行成本</p>
+<p>通过以上对比,十折交叉验证法与留一法精度相差不大;而且通过实验,留一法代码跑的时间更长,对于数据越大,这种现象越明显.<br>因此往后,选择十折交叉验证即可满足精度要求,也节约运行成本</p>
 ]]></content>
       <categories>
         <category>机器学习</category>
