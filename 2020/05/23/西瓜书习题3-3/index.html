@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://s1.ax1x.com/2020/05/23/Yxa7Gj.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/05/23/Yxabzn.png">
 <meta property="article:published_time" content="2020-05-23T08:06:17.000Z">
-<meta property="article:modified_time" content="2020-05-24T14:05:24.676Z">
+<meta property="article:modified_time" content="2020-05-25T05:03:41.172Z">
 <meta property="article:author" content="happybear">
 <meta property="article:tag" content="ML">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-24 22:05:24" itemprop="dateModified" datetime="2020-05-24T22:05:24+08:00">2020-05-24</time>
+                <time title="修改时间：2020-05-25 13:03:41" itemprop="dateModified" datetime="2020-05-25T13:03:41+08:00">2020-05-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -377,7 +377,7 @@
 </tr>
 </tbody></table>
 <p>因此将以上数据中好瓜表示为”1”,不好的瓜表示为”0”,转换成csv文件便于读取</p>
-<h1 id="公式说明"><a href="#公式说明" class="headerlink" title="公式说明"></a>公式说明</h1><p>基础线性模型:<br>$$f(x)=\omega_{1}x_{1}+\omega_{2}x_{2}…+\omega_{d}x_{d}+b$$<br>可转化为向量:<br>$$f(x)={\omega}x^T+b$$<br>继而令$\beta=({\omega};b)$,$\hat{x}=(x;1)$,那么(注:此处均作为列向量,与西瓜书上相反,):<br>$$f(x)={\omega}x^T+b={\beta}\hat{x}^T$$<br>为了解决此处的二分类问题,将预测值映射成$y\in{0,1}$的值,即将线性回归转化为逻辑回归,常常采用以下的对数几率函数(sigmoid函数)代替:<br>$$y=\frac{1}{1+e^{-\beta\hat{x}^T}}$$<br>因此,只要求得$\omega$和$b$的值即可,以下通过极大似然法来估计$\omega$和$b$的值:<br>$$\psi(\beta)=\sum_{i=1}^{m}(y_{i}\beta\hat{x}^T_{i}-ln(1+e^{\beta\hat{x}^T_{i}}))$$<br>将上式最大化转化为最小化,便于后面梯度下降求解,如西瓜书P59公式3.27:<br>$$\psi(\beta)=\sum_{i=1}^{m}(-y_{i}\beta\hat{x}^T_{i}+ln(1+e^{\beta\hat{x}^T_{i}}))$$</p>
+<h1 id="公式说明"><a href="#公式说明" class="headerlink" title="公式说明"></a>公式说明</h1><p>基础线性模型:<br>$$f(x)=\omega_{1}x_{1}+\omega_{2}x_{2}…+\omega_{d}x_{d}+b$$<br>可转化为向量:<br>$$f(x)={\omega}x^T+b$$<br>继而令$\beta=({\omega},b)$,$\hat{x}=(x,1)$,那么(注:此处均作为行向量,与西瓜书上相反,):<br>$$f(x)={\omega}x^T+b={\beta}\hat{x}^T$$<br>为了解决此处的二分类问题,将预测值映射成$y\in{0,1}$的值,即将线性回归转化为逻辑回归,常常采用以下的对数几率函数(sigmoid函数)代替:<br>$$y=\frac{1}{1+e^{-\beta\hat{x}^T}}$$<br>因此,只要求得$\omega$和$b$的值即可,以下通过极大似然法来估计$\omega$和$b$的值:<br>$$\psi(\beta)=\sum_{i=1}^{m}(y_{i}\beta\hat{x}^T_{i}-ln(1+e^{\beta\hat{x}^T_{i}}))$$<br>将上式最大化转化为最小化,便于后面梯度下降求解,如西瓜书P59公式3.27:<br>$$\psi(\beta)=\sum_{i=1}^{m}(-y_{i}\beta\hat{x}^T_{i}+ln(1+e^{\beta\hat{x}^T_{i}}))$$</p>
 <p>该函数为连续可导凸函数(对应海塞矩阵正定),因此可用梯度下降求得最优解,梯度为:<br>$$\frac{\varphi\psi(\beta)}{\varphi\beta}=\sum_{i=1}^{m}(-y_{i}+\frac{1}{1+e^{-\beta\hat{x}^T}})\hat{x}_{i}$$<br>迭代过程(其中$\lambda$为步长)为:<br>$$\beta^{t+1}=\beta^{t}-\lambda\frac{\varphi\psi(\beta)}{\varphi\beta}$$</p>
 <h1 id="sklearn库实现"><a href="#sklearn库实现" class="headerlink" title="sklearn库实现"></a>sklearn库实现</h1><h2 id="载入数据-预处理"><a href="#载入数据-预处理" class="headerlink" title="载入数据,预处理"></a>载入数据,预处理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dataset &#x3D; np.loadtxt(&#39;&#x2F;home&#x2F;data&#x2F;watermelon_3a.csv&#39;, delimiter&#x3D;&#39;,&#39;)</span><br><span class="line"></span><br><span class="line">X &#x3D; dataset[:, 1 : 3]</span><br><span class="line">y &#x3D; dataset[:, 3]</span><br><span class="line">print(np.shape(X))</span><br></pre></td></tr></table></figure>
 <pre><code>(17, 2)</code></pre><p>绘制分散图,查看数据分散情况:</p>
@@ -507,20 +507,20 @@ weighted avg       0.68      0.67      0.67         9</code></pre><p>这里选�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -561,12 +561,12 @@ weighted avg       0.68      0.67      0.67         9</code></pre><p>这里选�
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">96k</span>
+    <span title="站点总字数">104k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:27</span>
+    <span title="站点阅读时长">1:35</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
